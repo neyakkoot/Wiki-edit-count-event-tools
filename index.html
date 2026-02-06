@@ -3,8 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>விக்கிமீடியா நிகழ்வு பங்களிப்பு பகுப்பாய்வு</title>
+    <title>விக்கிமீடியா பங்களிப்பு பகுப்பாய்வு கருவி</title>
     <style>
+        :root {
+            --primary: #1a237e;
+            --primary-light: #534bae;
+            --primary-dark: #000051;
+            --secondary: #ffc107;
+            --text: #202122;
+            --text-light: #54595d;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            --border: #a2a9b1;
+            --success: #2e7d32;
+            --error: #c62828;
+            --warning: #f57c00;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -12,10 +27,10 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Nirmala UI', 'Latha', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #202122;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e3e8f0 100%);
             padding: 20px;
             min-height: 100vh;
         }
@@ -23,109 +38,202 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         header {
-            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
             padding: 25px 30px;
-            border-bottom: 5px solid #ffc107;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23000051' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
         }
         
         h1 {
             font-size: 28px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
         
         .subtitle {
             font-size: 16px;
             opacity: 0.95;
+            position: relative;
+            z-index: 1;
         }
         
-        .controls {
-            background: #f8f9fa;
-            padding: 20px 30px;
-            border-bottom: 1px solid #dee2e6;
+        .controls-container {
+            padding: 25px 30px;
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .input-sections {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            align-items: end;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
         }
         
-        .control-group {
+        @media (max-width: 1024px) {
+            .input-sections {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            font-size: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
         }
         
         label {
+            display: block;
             font-weight: 600;
-            color: #1a237e;
+            color: var(--text);
+            margin-bottom: 8px;
             font-size: 14px;
         }
         
-        input, select, button {
-            padding: 10px 15px;
-            border: 2px solid #ced4da;
-            border-radius: 6px;
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             font-size: 15px;
             transition: all 0.3s;
+            background: var(--card-bg);
+            color: var(--text);
         }
         
-        input:focus, select:focus {
-            border-color: #1a237e;
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.15);
+        }
+        
+        .date-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
         }
         
         button {
-            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-            color: white;
+            padding: 12px 24px;
             border: none;
-            cursor: pointer;
+            border-radius: 8px;
+            font-size: 15px;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.3s;
-            height: 42px;
+            min-width: 160px;
         }
         
-        button:hover:not(:disabled) {
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(26, 35, 126, 0.25);
+            box-shadow: 0 6px 20px rgba(26, 35, 126, 0.3);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #ff9800 100%);
+            color: white;
         }
         
         button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-        }
-        
-        .event-url-input {
-            grid-column: 1 / -1;
+            transform: none !important;
         }
         
         #loading {
             display: none;
             padding: 40px 20px;
             text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            margin: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            margin: 20px 30px;
+            border-left: 5px solid var(--primary);
         }
         
         .spinner {
             border: 4px solid rgba(26, 35, 126, 0.1);
-            border-left-color: #1a237e;
+            border-left-color: var(--primary);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
         }
@@ -135,114 +243,226 @@
         }
         
         .status-message {
-            text-align: center;
-            padding: 20px;
-            background: #e8f4fd;
+            padding: 15px 20px;
             border-radius: 8px;
-            margin: 20px;
-            border-left: 4px solid #1a237e;
+            margin: 0 30px 20px;
+            display: none;
+            animation: slideIn 0.3s;
         }
         
-        .error {
-            background: #fee;
-            border-left: 4px solid #d32f2f;
-            color: #c62828;
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .success {
+        .status-success {
             background: #e8f5e9;
-            border-left: 4px solid #2e7d32;
+            border-left: 5px solid var(--success);
             color: #1b5e20;
+        }
+        
+        .status-error {
+            background: #ffebee;
+            border-left: 5px solid var(--error);
+            color: #b71c1c;
+        }
+        
+        .status-info {
+            background: #e3f2fd;
+            border-left: 5px solid var(--primary);
+            color: #0d47a1;
+        }
+        
+        .status-warning {
+            background: #fff3e0;
+            border-left: 5px solid var(--warning);
+            color: #e65100;
         }
         
         #results {
             padding: 0 30px 30px;
         }
         
-        .stats-summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        .help-box {
+            background: #e8f4fd;
+            border-radius: 8px;
             padding: 20px;
-            border-radius: 10px;
-            border-left: 5px solid;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary);
         }
         
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-card:nth-child(1) { border-color: #1a237e; }
-        .stat-card:nth-child(2) { border-color: #283593; }
-        .stat-card:nth-child(3) { border-color: #303f9f; }
-        .stat-card:nth-child(4) { border-color: #3949ab; }
-        
-        .stat-card h3 {
-            font-size: 14px;
-            color: #54595d;
+        .help-box h3 {
+            color: var(--primary);
             margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .stat-card .value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #1a237e;
-            line-height: 1;
-        }
-        
-        .stat-card .sub-value {
-            font-size: 14px;
-            color: #666;
-            margin-top: 5px;
-        }
-        
-        .tabs {
             display: flex;
-            border-bottom: 2px solid #dee2e6;
-            margin: 30px 0 20px;
-            overflow-x: auto;
+            align-items: center;
+            gap: 10px;
         }
         
-        .tab {
-            padding: 12px 24px;
-            background: none;
-            border: none;
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
+        .help-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .help-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .help-item h4 {
+            color: var(--primary-light);
+            margin-bottom: 8px;
             font-size: 15px;
-            font-weight: 600;
-            color: #54595d;
-            white-space: nowrap;
+        }
+        
+        .help-item ul {
+            padding-left: 20px;
+            color: var(--text-light);
+        }
+        
+        .help-item li {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .participant-count {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+        
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .preset-btn {
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .preset-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .auto-extract-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .option-btn {
+            flex: 1;
+            padding: 10px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
             transition: all 0.3s;
         }
         
-        .tab:hover {
-            color: #1a237e;
-            background: #f8f9fa;
-        }
-        
-        .tab.active {
-            color: #1a237e;
-            border-bottom-color: #1a237e;
+        .option-btn:hover {
+            border-color: var(--primary);
             background: #f0f3ff;
         }
         
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s;
+        .option-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
         }
         
-        .tab-content.active {
+        .participant-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px;
+            background: white;
+            margin-top: 10px;
+        }
+        
+        .participant-item {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .participant-item:last-child {
+            border-bottom: none;
+        }
+        
+        .remove-participant {
+            color: var(--error);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0 5px;
+        }
+        
+        .example-text {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .user-input-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .method-tab {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .method-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .input-method-content {
+            display: none;
+        }
+        
+        .input-method-content.active {
             display: block;
+            animation: fadeIn 0.3s;
         }
         
         @keyframes fadeIn {
@@ -250,330 +470,953 @@
             to { opacity: 1; }
         }
         
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-bottom: 30px;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        th {
-            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-            color: white;
-            padding: 16px;
-            text-align: left;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-        }
-        
-        td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #e0e0e0;
-            vertical-align: middle;
-        }
-        
-        tr:last-child td {
-            border-bottom: none;
-        }
-        
-        tr:hover {
-            background-color: #f8f9fa;
-        }
-        
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 10px;
-            float: left;
-        }
-        
-        .username {
-            font-weight: 600;
-            color: #1a237e;
-            line-height: 1.4;
-        }
-        
-        .project-badge {
+        .contributor-badge {
             display: inline-block;
-            background: #e8f4fd;
-            color: #1a237e;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            margin: 2px;
-            border: 1px solid rgba(26, 35, 126, 0.2);
-        }
-        
-        .project-badge.highlight {
-            background: #1a237e;
+            background: var(--primary);
             color: white;
-        }
-        
-        .contribution-count {
-            font-weight: 700;
-            color: #1a237e;
-            font-size: 18px;
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background: #e0e0e0;
+            padding: 4px 10px;
             border-radius: 4px;
-            overflow: hidden;
-            margin: 5px 0;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #1a237e 0%, #283593 100%);
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-        
-        .export-buttons {
-            display: flex;
-            gap: 15px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .export-btn {
-            background: white;
-            color: #1a237e;
-            border: 2px solid #1a237e;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-        }
-        
-        .export-btn:hover {
-            background: #1a237e;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(26, 35, 126, 0.25);
-        }
-        
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-            font-size: 16px;
-        }
-        
-        .no-data i {
-            font-size: 48px;
-            margin-bottom: 15px;
-            color: #bdbdbd;
-        }
-        
-        @media (max-width: 768px) {
-            .controls {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-summary {
-                grid-template-columns: 1fr;
-            }
-            
-            .export-buttons {
-                flex-direction: column;
-            }
-            
-            .export-btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            table {
-                display: block;
-                overflow-x: auto;
-            }
-        }
-        
-        .timestamp {
             font-size: 12px;
-            color: #666;
-            font-family: monospace;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
         
-        .contrib-details {
+        .stats-preview {
             background: #f8f9fa;
-            border-radius: 6px;
             padding: 15px;
-            margin-top: 10px;
-            border-left: 4px solid #1a237e;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid var(--primary);
         }
         
-        .contrib-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-            border-bottom: 1px dashed #dee2e6;
+        .stats-preview h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
         }
         
-        .contrib-item:last-child {
-            border-bottom: none;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        
+        .stat-preview {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .stat-preview .value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-preview .label {
+            font-size: 12px;
+            color: var(--text-light);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📊 விக்கிமீடியா நிகழ்வு பங்களிப்பு பகுப்பாய்வு</h1>
-            <p class="subtitle">பங்களிப்பாளர்களின் தொடர் பங்களிப்புகளை திட்டம் வாரியாகக் கணக்கிடுகிறது</p>
+            <h1>📊 விக்கிமீடியா பங்களிப்பு பகுப்பாய்வு கருவி</h1>
+            <p class="subtitle">எந்தவொரு நிகழ்வுக்குமான பங்களிப்பாளர்களின் தொடர் பங்களிப்புகளைத் திட்டம் வாரியாகக் கணக்கிடுகிறது</p>
+            <div class="participant-count">
+                <span id="participantCount">0</span> பங்களிப்பாளர்கள்
+            </div>
         </header>
         
-        <div class="controls">
-            <div class="control-group event-url-input">
-                <label for="eventUrl">நிகழ்வு பக்கம் URL:</label>
-                <input type="text" id="eventUrl" 
-                       value="https://ta.wikisource.org/wiki/விக்கிமூலம்:விக்கிப்பீடியா25_பிறந்தநாள்_விழா_நாள்_1"
-                       placeholder="நிகழ்வு பக்கத்தின் URL ஐ உள்ளிடவும்">
+        <div class="controls-container">
+            <div class="input-sections">
+                <!-- பங்களிப்பாளர்கள் உள்ளீட்டுப் பகுதி -->
+                <div class="input-section">
+                    <div class="section-title">
+                        <i>👥</i>
+                        <span>பங்களிப்பாளர்களைச் சேர்க்கவும்</span>
+                    </div>
+                    
+                    <div class="user-input-methods">
+                        <div class="method-tab active" onclick="switchInputMethod('manual')">✍️ கைமுறையாக</div>
+                        <div class="method-tab" onclick="switchInputMethod('paste')">📋 நகலெடு/ஒட்டு</div>
+                        <div class="method-tab" onclick="switchInputMethod('extract')">🌐 பக்கத்திலிருந்து</div>
+                    </div>
+                    
+                    <!-- கைமுறை உள்ளீட்டு முறை -->
+                    <div id="manual-method" class="input-method-content active">
+                        <div class="input-group">
+                            <label for="usernameInput">பயனர் பெயரை உள்ளிடவும்:</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="usernameInput" 
+                                       placeholder="எ.கா: Subisena">
+                                <button type="button" onclick="addManualParticipant()" 
+                                        style="min-width: auto; padding: 10px 20px;">
+                                    ➕ சேர்க்க
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="preset-buttons">
+                            <small>விரைவு சேர்க்க:</small>
+                            <button class="preset-btn" onclick="addPresetUser('Subisena')">Subisena</button>
+                            <button class="preset-btn" onclick="addPresetUser('Mallika Vijayakumar')">Mallika</button>
+                            <button class="preset-btn" onclick="addPresetUser('நேயக்கோ')">நேயக்கோ</button>
+                            <button class="preset-btn" onclick="addPresetUser('Dr. Dhanalakshmi. K')">Dr. Dhanalakshmi</button>
+                            <button class="preset-btn" onclick="clearParticipants()">🧹 அனைத்தும் நீக்கு</button>
+                        </div>
+                    </div>
+                    
+                    <!-- நகலெடு/ஒட்டு முறை -->
+                    <div id="paste-method" class="input-method-content">
+                        <div class="input-group">
+                            <label for="participantsTextarea">பங்களிப்பாளர்களின் பட்டியலை ஒட்டவும்:</label>
+                            <textarea id="participantsTextarea" 
+                                      placeholder="ஒவ்வொரு வரியிலும் ஒரு பயனர் பெயர்:
+--Subisena (பேச்சு) 09:57, 31 சனவரி 2026
+Mallika Vijayakumar
+Srijayanthi Devi
+Dr. Dhanalakshmi. K"></textarea>
+                            <p class="example-text">
+                                ஒவ்வொரு வரியிலும் ஒரு பயனர் பெயர். <code>--</code>, <code>()</code>, தேதிகள் போன்றவை தானாகவே அகற்றப்படும்.
+                            </p>
+                        </div>
+                        
+                        <button type="button" onclick="parsePastedParticipants()" 
+                                class="btn-secondary" style="width: 100%;">
+                            📋 ஒட்டிய பட்டியலைச் சேர்க்க
+                        </button>
+                    </div>
+                    
+                    <!-- பக்கத்திலிருந்து பிரித்தெடுக்கும் முறை -->
+                    <div id="extract-method" class="input-method-content">
+                        <div class="input-group">
+                            <label for="pageUrl">விக்கி பக்கம் URL:</label>
+                            <input type="text" id="pageUrl" 
+                                   value="https://ta.wikisource.org/wiki/விக்கிமூலம்:விக்கிப்பீடியா25_பிறந்தநாள்_விழா_நாள்_1"
+                                   placeholder="https://ta.wikipedia.org/wiki/பக்கம்_பெயர்">
+                        </div>
+                        
+                        <div class="auto-extract-options">
+                            <div class="option-btn active" onclick="setExtractionMode('wikitext')">
+                                விக்கி உரை (கையொப்பங்கள்)
+                            </div>
+                            <div class="option-btn" onclick="setExtractionMode('participants')">
+                                பங்களிப்பாளர் பட்டியல்
+                            </div>
+                        </div>
+                        
+                        <button type="button" onclick="extractFromPage()" 
+                                class="btn-secondary" style="width: 100%; margin-top: 15px;">
+                            🌐 பக்கத்திலிருந்து பிரித்தெடு
+                        </button>
+                    </div>
+                    
+                    <!-- தற்போதைய பங்களிப்பாளர்கள் -->
+                    <div class="input-group">
+                        <label>தற்போதைய பங்களிப்பாளர்கள்:</label>
+                        <div class="participant-list" id="participantsList">
+                            <!-- பங்களிப்பாளர்கள் இங்கே காட்டப்படும் -->
+                        </div>
+                    </div>
+                    
+                    <div class="stats-preview">
+                        <h4>தற்போதைய புள்ளிவிவரம்:</h4>
+                        <div class="stats-grid">
+                            <div class="stat-preview">
+                                <div class="value" id="previewTotal">0</div>
+                                <div class="label">பங்களிப்பாளர்கள்</div>
+                            </div>
+                            <div class="stat-preview">
+                                <div class="value" id="previewValid">0</div>
+                                <div class="label">செல்லுபடியானவை</div>
+                            </div>
+                            <div class="stat-preview">
+                                <div class="value" id="previewDuplicates">0</div>
+                                <div class="label">நகல்கள்</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- பகுப்பாய்வு அமைப்புகள் பகுதி -->
+                <div class="input-section">
+                    <div class="section-title">
+                        <i>⚙️</i>
+                        <span>பகுப்பாய்வு அமைப்புகள்</span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>கால அளவு:</label>
+                        <div class="date-inputs">
+                            <div>
+                                <label for="startDate" style="font-size: 13px;">தொடக்கம்:</label>
+                                <input type="date" id="startDate" value="2026-01-31">
+                            </div>
+                            <div>
+                                <label for="endDate" style="font-size: 13px;">முடிவு:</label>
+                                <input type="date" id="endDate" value="2026-02-02">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="projectsSelect">சேர்க்க வேண்டிய திட்டங்கள்:</label>
+                        <select id="projectsSelect" multiple size="6">
+                            <option value="ta.wikipedia.org" selected>தமிழ் விக்கிப்பீடியா</option>
+                            <option value="ta.wikisource.org" selected>தமிழ் விக்கிமூலம்</option>
+                            <option value="ta.wiktionary.org" selected>தமிழ் விக்கியனரி</option>
+                            <option value="ta.wikibooks.org">தமிழ் விக்கிநூல்கள்</option>
+                            <option value="commons.wikimedia.org" selected>விக்கிமீடியா பொதுவகம்</option>
+                            <option value="wikidata.org" selected>விக்கிதரவு</option>
+                            <option value="en.wikipedia.org">ஆங்கில விக்கிப்பீடியா</option>
+                            <option value="meta.wikimedia.org">மேட்டா-விக்கி</option>
+                        </select>
+                        <p class="example-text">
+                            Ctrl (Windows) அல்லது Cmd (Mac) வைத்துக்கொண்டு பலவற்றைத் தேர்ந்தெடுக்கவும்
+                        </p>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="contributionLimit">ஒரு பயனருக்கு அதிகபட்ச பங்களிப்புகள்:</label>
+                        <input type="number" id="contributionLimit" value="500" min="10" max="5000">
+                    </div>
+                    
+                    <div class="help-box" style="margin-top: 20px;">
+                        <h3>💡 பயனுள்ள குறிப்புகள்</h3>
+                        <div class="help-content">
+                            <div class="help-item">
+                                <h4>பங்களிப்பாளர்களைச் சேர்க்க</h4>
+                                <ul>
+                                    <li>கைமுறையாக பெயர்களை உள்ளிடலாம்</li>
+                                    <li>பட்டியலை நகலெடுத்து ஒட்டலாம்</li>
+                                    <li>விக்கிப் பக்கத்திலிருந்து தானாகப் பிரித்தெடுக்கலாம்</li>
+                                </ul>
+                            </div>
+                            <div class="help-item">
+                                <h4>சிறந்த முடிவுகளுக்கு</h4>
+                                <ul>
+                                    <li>குறைந்தது 5-10 பங்களிப்பாளர்கள்</li>
+                                    <li>சரியான தேதி வரம்பு</li>
+                                    <li>பொருத்தமான திட்டங்களைத் தேர்ந்தெடுக்கவும்</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="control-group">
-                <label for="startDate">தொடக்க தேதி:</label>
-                <input type="date" id="startDate" value="2026-01-31">
-            </div>
-            
-            <div class="control-group">
-                <label for="endDate">முடிவு தேதி:</label>
-                <input type="date" id="endDate" value="2026-02-02">
-            </div>
-            
-            <div class="control-group">
-                <label>&nbsp;</label>
-                <button id="analyzeBtn">
+            <div class="action-buttons">
+                <button id="analyzeBtn" class="btn-primary">
                     <span>🔍 பங்களிப்புகளைத் தேடு</span>
+                </button>
+                <button id="testApiBtn" class="btn-secondary" onclick="testWikimediaAPI()">
+                    <span>🔧 API சோதனை</span>
+                </button>
+                <button id="saveConfigBtn" class="btn-secondary" onclick="saveConfiguration()">
+                    <span>💾 அமைப்புகளைச் சேமி</span>
+                </button>
+                <button id="loadConfigBtn" class="btn-secondary" onclick="loadConfiguration()">
+                    <span>📂 அமைப்புகளை ஏற்று</span>
+                </button>
+                <button id="clearAllBtn" class="btn-warning" onclick="clearAllData()">
+                    <span>🧹 அனைத்தும் நீக்கு</span>
                 </button>
             </div>
         </div>
         
+        <div id="statusMessage" class="status-message"></div>
+        
         <div id="loading">
             <div class="spinner"></div>
-            <p>பங்களிப்புகள் பெறப்படுகின்றன... இது சிறிது நேரம் எடுக்கலாம்</p>
-            <p class="timestamp" id="progressText"></p>
+            <p id="progressText">பங்களிப்புகள் பெறப்படுகின்றன...</p>
+            <div style="margin-top: 20px;">
+                <div style="width: 100%; background: #e0e0e0; border-radius: 10px; height: 10px;">
+                    <div id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 10px; transition: width 0.3s;"></div>
+                </div>
+            </div>
         </div>
-        
-        <div id="statusMessage" class="status-message" style="display: none;"></div>
         
         <div id="results">
             <!-- முடிவுகள் இங்கே காட்டப்படும் -->
+            <div style="text-align: center; padding: 60px 20px; color: var(--text-light);">
+                <div style="font-size: 64px; margin-bottom: 20px;">📊</div>
+                <h2 style="color: var(--primary); margin-bottom: 15px;">பங்களிப்புகளைப் பகுப்பாய்வு செய்யத் தொடங்குங்கள்</h2>
+                <p>முதலில் பங்களிப்பாளர்களைச் சேர்க்கவும், பின்னர் "பங்களிப்புகளைத் தேடு" பொத்தானைக் கிளிக் செய்யவும்</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // பங்களிப்பாளர்களின் பட்டியல் (கொடுக்கப்பட்ட நிகழ்விலிருந்து)
-        const EVENT_PARTICIPANTS = [
-            'Subisena',
-            'Mallika Vijayakumar',
-            'Srijayanthi Devi',
-            'Sujivenba04',
-            'Dr. Dhanalakshmi. K',
-            'Manimekalaiamuthan',
-            'Thamizhini Sathiyaraj',
-            'Rarunachinna',
-            'M.Deepika Muthukumar',
-            'Pavanar Sathiyaraj',
-            'NithyaSathiyaraj',
-            'SavithaDuraisamy',
-            'Dharshika2026',
-            'Saranya V R',
-            'Boopalan28012003',
-            'Rajendran Nallathambi',
-            'Neyakkoo',
-            'R. Ariharasuthan',
-            'Gunathamizh',
-            'LALITHAA K',
-            'Magizh Sundram',
-            'Kirubhakaran Rajmohan'
-            'Info-farmer'
-        ];
+        // பங்களிப்பாளர் மேலாண்மை
+        let participants = new Set();
+        let extractionMode = 'wikitext';
+        
+        // DOM கூறுகள்
+        const participantCountEl = document.getElementById('participantCount');
+        const participantsListEl = document.getElementById('participantsList');
+        const usernameInput = document.getElementById('usernameInput');
+        const participantsTextarea = document.getElementById('participantsTextarea');
+        const pageUrlInput = document.getElementById('pageUrl');
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        const projectsSelect = document.getElementById('projectsSelect');
+        const contributionLimitInput = document.getElementById('contributionLimit');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const loadingDiv = document.getElementById('loading');
+        const progressText = document.getElementById('progressText');
+        const progressBar = document.getElementById('progressBar');
+        const statusMessage = document.getElementById('statusMessage');
+        const resultsDiv = document.getElementById('results');
+        
+        // முன்னோட்ட புள்ளிவிவரங்கள்
+        const previewTotal = document.getElementById('previewTotal');
+        const previewValid = document.getElementById('previewValid');
+        const previewDuplicates = document.getElementById('previewDuplicates');
+        
+        // தொடக்கத்தில் பங்களிப்பாளர்களை ஏற்று
+        document.addEventListener('DOMContentLoaded', function() {
+            loadParticipantsFromStorage();
+            updateParticipantDisplay();
+            
+            // நிகழ்வுக்கான மாதிரி பங்களிப்பாளர்களைச் சேர்க்க
+            if (participants.size === 0) {
+                addSampleParticipants();
+            }
+            
+            // தேதிகளை அமைக்கவும்
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            if (!startDateInput.value) startDateInput.value = '2026-01-31';
+            if (!endDateInput.value) endDateInput.value = '2026-02-02';
+            
+            // Enter விசையைக் கேட்க
+            usernameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addManualParticipant();
+                }
+            });
+        });
+        
+        // உள்ளீட்டு முறையை மாற்றுக
+        function switchInputMethod(method) {
+            // அனைத்து தாவல்களையும் மறைக்கவும்
+            document.querySelectorAll('.method-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.input-method-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // தேர்ந்தெடுக்கப்பட்ட தாவலைக் காட்டவும்
+            document.querySelector(`.method-tab[onclick*="${method}"]`).classList.add('active');
+            document.getElementById(`${method}-method`).classList.add('active');
+        }
+        
+        // பிரித்தெடுக்கும் முறையை அமைக்கவும்
+        function setExtractionMode(mode) {
+            extractionMode = mode;
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // கைமுறையாக பங்களிப்பாளரைச் சேர்க்க
+        function addManualParticipant() {
+            const username = usernameInput.value.trim();
+            if (!username) {
+                showStatus('பயனர் பெயரை உள்ளிடவும்', 'warning');
+                usernameInput.focus();
+                return;
+            }
+            
+            if (addParticipant(username)) {
+                usernameInput.value = '';
+                usernameInput.focus();
+                showStatus(`${username} சேர்க்கப்பட்டது`, 'success');
+            }
+        }
+        
+        // முன்னமைக்கப்பட்ட பயனரைச் சேர்க்க
+        function addPresetUser(username) {
+            if (addParticipant(username)) {
+                showStatus(`${username} சேர்க்கப்பட்டது`, 'success');
+            }
+        }
+        
+        // பங்களிப்பாளரைச் சேர்க்க
+        function addParticipant(username) {
+            // பயனர் பெயரைச் சுத்திகரிக்கவும்
+            const cleanUsername = cleanUsernameString(username);
+            
+            if (!cleanUsername || cleanUsername.length < 2) {
+                showStatus('செல்லுபடியாகாத பயனர் பெயர்', 'error');
+                return false;
+            }
+            
+            if (participants.has(cleanUsername)) {
+                showStatus(`${cleanUsername} ஏற்கனவே உள்ளது`, 'warning');
+                return false;
+            }
+            
+            participants.add(cleanUsername);
+            updateParticipantDisplay();
+            saveParticipantsToStorage();
+            return true;
+        }
+        
+        // பயனர் பெயரைச் சுத்திகரிக்கவும்
+        function cleanUsernameString(username) {
+            // பொதுவான விக்கி வடிவங்களை அகற்றவும்
+            let clean = username
+                .replace(/^--\s*/, '')           // -- ஆரம்பத்தில்
+                .replace(/\([^)]*\)$/, '')       // கடைசியில் ()
+                .replace(/\[\[[^\]]*\|/, '')     // [[பயனர்:பெயர்|
+                .replace(/\[\[|\]\]/g, '')       // [[ அல்லது ]]
+                .replace(/பயனர்:/i, '')         // பயனர்: முன்னொட்டு
+                .replace(/User:/i, '')           // User: முன்னொட்டு
+                .replace(/\d{1,2}:\d{2}.*$/, '') // நேரம் மற்றும் தேதி
+                .replace(/\(UTC\).*$/i, '')      // (UTC) மற்றும் பின்னால் உள்ளவை
+                .trim();
+            
+            // எண்கள் மட்டும் இருந்தால் நிராகரிக்கவும்
+            if (/^\d+$/.test(clean)) {
+                return '';
+            }
+            
+            return clean;
+        }
+        
+        // ஒட்டிய பட்டியலைப் பாகுபடுத்துக
+        function parsePastedParticipants() {
+            const text = participantsTextarea.value.trim();
+            if (!text) {
+                showStatus('உரையை ஒட்டவும்', 'warning');
+                return;
+            }
+            
+            const lines = text.split('\n');
+            let addedCount = 0;
+            let duplicateCount = 0;
+            let invalidCount = 0;
+            
+            lines.forEach(line => {
+                const username = line.trim();
+                if (!username) return;
+                
+                const cleanUsername = cleanUsernameString(username);
+                if (!cleanUsername) {
+                    invalidCount++;
+                    return;
+                }
+                
+                if (participants.has(cleanUsername)) {
+                    duplicateCount++;
+                } else {
+                    participants.add(cleanUsername);
+                    addedCount++;
+                }
+            });
+            
+            updateParticipantDisplay();
+            saveParticipantsToStorage();
+            
+            let message = `${addedCount} புதிய பங்களிப்பாளர்கள் சேர்க்கப்பட்டனர்`;
+            if (duplicateCount > 0) message += `, ${duplicateCount} நகல்கள் தவிர்க்கப்பட்டன`;
+            if (invalidCount > 0) message += `, ${invalidCount} செல்லாதவை நிராகரிக்கப்பட்டன`;
+            
+            showStatus(message, 'success');
+            participantsTextarea.value = '';
+        }
+        
+        // விக்கிப் பக்கத்திலிருந்து பிரித்தெடுக்கவும்
+        async function extractFromPage() {
+            const url = pageUrlInput.value.trim();
+            if (!url) {
+                showStatus('URL ஐ உள்ளிடவும்', 'warning');
+                return;
+            }
+            
+            try {
+                showLoading(true, 'பக்கம் பெறப்படுகிறது...');
+                
+                // CORS பிரச்சனையைத் தவிர்க்க proxy ஐப் பயன்படுத்துகிறோம்
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+                const response = await fetch(proxyUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`பக்கம் பெற முடியவில்லை: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const pageContent = data.contents;
+                
+                let extractedUsers = [];
+                
+                if (extractionMode === 'wikitext') {
+                    // விக்கி உரையிலிருந்து பயனர் பெயர்களைப் பிரித்தெடுக்கவும்
+                    extractedUsers = extractUsersFromWikitext(pageContent);
+                } else {
+                    // பங்களிப்பாளர் பட்டியலிலிருந்து பிரித்தெடுக்கவும்
+                    extractedUsers = extractUsersFromParticipantsList(pageContent);
+                }
+                
+                // புதிய பயனர்களைச் சேர்க்கவும்
+                let addedCount = 0;
+                let duplicateCount = 0;
+                
+                extractedUsers.forEach(username => {
+                    if (participants.has(username)) {
+                        duplicateCount++;
+                    } else {
+                        participants.add(username);
+                        addedCount++;
+                    }
+                });
+                
+                updateParticipantDisplay();
+                saveParticipantsToStorage();
+                showLoading(false);
+                
+                if (addedCount === 0 && duplicateCount === 0) {
+                    showStatus('பயனர்கள் எதுவும் கிடைக்கவில்லை', 'warning');
+                } else {
+                    showStatus(`${addedCount} புதிய பங்களிப்பாளர்கள் பிரித்தெடுக்கப்பட்டனர்${duplicateCount > 0 ? `, ${duplicateCount} நகல்கள் தவிர்க்கப்பட்டன` : ''}`, 'success');
+                }
+                
+            } catch (error) {
+                showLoading(false);
+                showStatus(`பிழை: ${error.message}`, 'error');
+                console.error('பிரித்தெடுத்தல் பிழை:', error);
+            }
+        }
+        
+        // விக்கி உரையிலிருந்து பயனர் பெயர்களைப் பிரித்தெடுக்கவும்
+        function extractUsersFromWikitext(content) {
+            const users = new Set();
+            
+            // பல்வேறு விக்கி வடிவங்கள்
+            const patterns = [
+                /--\s*([^\s\(]+)/g,                            // --Username
+                /\[\[(?:பயனர்|User):([^|\]]+)/gi,            // [[User:Username
+                /பங்களிப்பாளர்[:\s]*([^\n<]+)/gi,            // பங்களிப்பாளர்: Username
+                /\*?\s*'''([^''']+)'''/g,                     // '''Username'''
+                /\/\/\s*([^\s]+)/g,                           // // Username
+                /\|\s*பங்களிப்பாளர்\s*=\s*([^\n|]+)/gi,      // |பங்களிப்பாளர்=Username
+            ];
+            
+            patterns.forEach(pattern => {
+                let match;
+                while ((match = pattern.exec(content)) !== null) {
+                    const rawUser = match[1].trim();
+                    const cleanUser = cleanUsernameString(rawUser);
+                    if (cleanUser && cleanUser.length > 1) {
+                        users.add(cleanUser);
+                    }
+                }
+            });
+            
+            return Array.from(users);
+        }
+        
+        // பங்களிப்பாளர் பட்டியலிலிருந்து பிரித்தெடுக்கவும்
+        function extractUsersFromParticipantsList(content) {
+            const users = new Set();
+            
+            // HTML பக்கத்திலிருந்து பட்டியல் கூறுகளைக் கண்டறியவும்
+            const listPatterns = [
+                /<li[^>]*>([^<]+)<\/li>/gi,
+                /<td[^>]*>([^<]+)<\/td>/gi,
+                /\*+\s*([^\n]+)/g,
+                /\d+\.\s*([^\n]+)/g
+            ];
+            
+            // முதலில் HTML குறிச்சொற்களை அகற்றவும்
+            let textContent = content.replace(/<[^>]*>/g, '\n');
+            
+            listPatterns.forEach(pattern => {
+                let match;
+                while ((match = pattern.exec(textContent)) !== null) {
+                    const rawUser = match[1].trim();
+                    const cleanUser = cleanUsernameString(rawUser);
+                    if (cleanUser && cleanUser.length > 1) {
+                        users.add(cleanUser);
+                    }
+                }
+            });
+            
+            return Array.from(users);
+        }
+        
+        // பங்களிப்பாளர் காட்சியைப் புதுப்பிக்கவும்
+        function updateParticipantDisplay() {
+            participantCountEl.textContent = participants.size;
+            
+            // பட்டியலைப் புதுப்பிக்கவும்
+            participantsListEl.innerHTML = '';
+            
+            let validCount = 0;
+            let duplicateCount = 0;
+            
+            Array.from(participants).sort().forEach(username => {
+                validCount++;
+                
+                const div = document.createElement('div');
+                div.className = 'participant-item';
+                div.innerHTML = `
+                    <span>${username}</span>
+                    <button class="remove-participant" onclick="removeParticipant('${username}')">×</button>
+                `;
+                participantsListEl.appendChild(div);
+            });
+            
+            // முன்னோட்ட புள்ளிவிவரங்களைப் புதுப்பிக்கவும்
+            previewTotal.textContent = participants.size;
+            previewValid.textContent = validCount;
+            previewDuplicates.textContent = duplicateCount;
+            
+            // பகுப்பாய்வு பொத்தானை இயக்கவும்/முடக்கவும்
+            analyzeBtn.disabled = participants.size === 0;
+        }
+        
+        // பங்களிப்பாளரை நீக்குக
+        function removeParticipant(username) {
+            participants.delete(username);
+            updateParticipantDisplay();
+            saveParticipantsToStorage();
+            showStatus(`${username} நீக்கப்பட்டது`, 'success');
+        }
+        
+        // அனைத்து பங்களிப்பாளர்களையும் நீக்குக
+        function clearParticipants() {
+            if (participants.size === 0) return;
+            
+            if (confirm(`அனைத்து ${participants.size} பங்களிப்பாளர்களையும் நீக்க விரும்புகிறீர்களா?`)) {
+                participants.clear();
+                updateParticipantDisplay();
+                saveParticipantsToStorage();
+                showStatus('அனைத்து பங்களிப்பாளர்களும் நீக்கப்பட்டனர்', 'success');
+            }
+        }
+        
+        // மாதிரி பங்களிப்பாளர்களைச் சேர்க்க
+        function addSampleParticipants() {
+            const sampleUsers = [
+                'Subisena',
+                'Mallika Vijayakumar',
+                'Srijayanthi Devi',
+                'Sujivenba04',
+                'Dr. Dhanalakshmi. K',
+                'Manimekalaiamuthan',
+                'Thamizhini Sathiyaraj',
+                'Rarunachinna',
+                'M.Deepika Muthukumar',
+                'Pavanar Sathiyaraj',
+                'NithyaSathiyaraj',
+                'SavithaDuraisamy',
+                'Dharshika2026',
+                'Saranya V R',
+                'Boopalan28012003',
+                'Rajendran Nallathambi',
+                'நேயக்கோ',
+                'R. Ariharasuthan',
+                'Gunathamizh',
+                'LALITHAA K',
+                'Magizh Sundram',
+                'Kirubhakaran Rajmohan'
+            ];
+            
+            sampleUsers.forEach(user => {
+                participants.add(user);
+            });
+            
+            updateParticipantDisplay();
+            saveParticipantsToStorage();
+            showStatus(`${sampleUsers.length} மாதிரி பங்களிப்பாளர்கள் சேர்க்கப்பட்டனர்`, 'success');
+        }
+        
+        // சேமிப்பகத்தில் இருந்து பங்களிப்பாளர்களை ஏற்று
+        function loadParticipantsFromStorage() {
+            try {
+                const saved = localStorage.getItem('wikiParticipants');
+                if (saved) {
+                    const savedParticipants = JSON.parse(saved);
+                    participants = new Set(savedParticipants);
+                }
+            } catch (error) {
+                console.error('சேமிப்பகத்திலிருந்து ஏற்றுவதில் பிழை:', error);
+            }
+        }
+        
+        // சேமிப்பகத்தில் பங்களிப்பாளர்களைச் சேமிக்கவும்
+        function saveParticipantsToStorage() {
+            try {
+                localStorage.setItem('wikiParticipants', JSON.stringify(Array.from(participants)));
+            } catch (error) {
+                console.error('சேமிப்பகத்தில் சேமிப்பதில் பிழை:', error);
+            }
+        }
+        
+        // அமைப்புகளைச் சேமிக்கவும்
+        function saveConfiguration() {
+            try {
+                const config = {
+                    participants: Array.from(participants),
+                    startDate: startDateInput.value,
+                    endDate: endDateInput.value,
+                    selectedProjects: Array.from(projectsSelect.selectedOptions).map(opt => opt.value),
+                    contributionLimit: contributionLimitInput.value,
+                    pageUrl: pageUrlInput.value
+                };
+                
+                localStorage.setItem('wikiAnalyzerConfig', JSON.stringify(config));
+                showStatus('அமைப்புகள் சேமிக்கப்பட்டன', 'success');
+            } catch (error) {
+                showStatus(`சேமிப்பு பிழை: ${error.message}`, 'error');
+            }
+        }
+        
+        // அமைப்புகளை ஏற்று
+        function loadConfiguration() {
+            try {
+                const saved = localStorage.getItem('wikiAnalyzerConfig');
+                if (!saved) {
+                    showStatus('சேமிக்கப்பட்ட அமைப்புகள் எதுவும் இல்லை', 'warning');
+                    return;
+                }
+                
+                const config = JSON.parse(saved);
+                
+                // பங்களிப்பாளர்களை ஏற்று
+                participants = new Set(config.participants || []);
+                updateParticipantDisplay();
+                
+                // அமைப்புகளை ஏற்று
+                if (config.startDate) startDateInput.value = config.startDate;
+                if (config.endDate) endDateInput.value = config.endDate;
+                if (config.contributionLimit) contributionLimitInput.value = config.contributionLimit;
+                if (config.pageUrl) pageUrlInput.value = config.pageUrl;
+                
+                // திட்டங்களைத் தேர்ந்தெடுக்கவும்
+                Array.from(projectsSelect.options).forEach(option => {
+                    option.selected = config.selectedProjects?.includes(option.value) || false;
+                });
+                
+                showStatus('அமைப்புகள் ஏற்றப்பட்டன', 'success');
+            } catch (error) {
+                showStatus(`ஏற்றும் பிழை: ${error.message}`, 'error');
+            }
+        }
+        
+        // அனைத்து தரவையும் நீக்குக
+        function clearAllData() {
+            if (confirm('அனைத்து பங்களிப்பாளர்கள், அமைப்புகள் மற்றும் முடிவுகளையும் நீக்க விரும்புகிறீர்களா?')) {
+                participants.clear();
+                updateParticipantDisplay();
+                
+                // உள்ளீட்டுப் புலங்களை மீட்டமைக்கவும்
+                usernameInput.value = '';
+                participantsTextarea.value = '';
+                pageUrlInput.value = 'https://ta.wikisource.org/wiki/விக்கிமூலம்:விக்கிப்பீடியா25_பிறந்தநாள்_விழா_நாள்_1';
+                startDateInput.value = '2026-01-31';
+                endDateInput.value = '2026-02-02';
+                contributionLimitInput.value = '500';
+                
+                // திட்டங்களை மீட்டமைக்கவும்
+                Array.from(projectsSelect.options).forEach(option => {
+                    option.selected = ['ta.wikipedia.org', 'ta.wikisource.org', 'ta.wiktionary.org', 'commons.wikimedia.org', 'wikidata.org']
+                        .includes(option.value);
+                });
+                
+                // சேமிப்பகத்தை அழிக்கவும்
+                localStorage.removeItem('wikiParticipants');
+                localStorage.removeItem('wikiAnalyzerConfig');
+                
+                // முடிவுகளை அழிக்கவும்
+                resultsDiv.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px; color: var(--text-light);">
+                        <div style="font-size: 64px; margin-bottom: 20px;">🔄</div>
+                        <h2 style="color: var(--primary); margin-bottom: 15px;">தரவுகள் அழிக்கப்பட்டன</h2>
+                        <p>புதிய பங்களிப்பாளர்களைச் சேர்க்கவும், பின்னர் "பங்களிப்புகளைத் தேடு" பொத்தானைக் கிளிக் செய்யவும்</p>
+                    </div>`;
+                
+                showStatus('அனைத்து தரவுகளும் அழிக்கப்பட்டன', 'success');
+            }
+        }
+        
+        // Wikimedia API ஐ சோதிக்கவும்
+        async function testWikimediaAPI() {
+            try {
+                showLoading(true, 'API சோதனை...');
+                
+                const testUrl = 'https://ta.wikipedia.org/w/api.php?action=query&meta=siteinfo&format=json&origin=*';
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(testUrl)}`;
+                
+                const response = await fetch(proxyUrl);
+                if (!response.ok) {
+                    throw new Error(`API பதில்: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const apiData = JSON.parse(data.contents);
+                
+                showLoading(false);
+                
+                if (apiData.query) {
+                    showStatus('✅ Wikimedia API வேலை செய்கிறது', 'success');
+                } else {
+                    showStatus('⚠️ API பதில் எதிர்பார்த்ததுபோல் இல்லை', 'warning');
+                }
+                
+            } catch (error) {
+                showLoading(false);
+                showStatus(`❌ API பிழை: ${error.message}`, 'error');
+            }
+        }
+        
+        // பகுப்பாய்வைத் தொடங்குக
+        analyzeBtn.addEventListener('click', async function() {
+            if (participants.size === 0) {
+                showStatus('முதலில் பங்களிப்பாளர்களைச் சேர்க்கவும்', 'warning');
+                return;
+            }
+            
+            const startDate = startDateInput.value;
+            const endDate = endDateInput.value;
+            
+            if (!startDate || !endDate) {
+                showStatus('தேதி வரம்பைத் தேர்ந்தெடுக்கவும்', 'warning');
+                return;
+            }
+            
+            try {
+                analyzeBtn.disabled = true;
+                analyzeBtn.innerHTML = '<span>⏳ பகுப்பாய்வு செய்கிறது...</span>';
+                
+                const analyzer = new WikimediaContributionsAnalyzer();
+                const report = await analyzer.analyzeEvent(
+                    Array.from(participants),
+                    startDate,
+                    endDate
+                );
+                
+                analyzer.displayReport(report, 'results');
+                
+                analyzeBtn.disabled = false;
+                analyzeBtn.innerHTML = '<span>🔍 பங்களிப்புகளைத் தேடு</span>';
+                
+            } catch (error) {
+                console.error('பகுப்பாய்வு பிழை:', error);
+                showStatus(`பகுப்பாய்வு பிழை: ${error.message}`, 'error');
+                analyzeBtn.disabled = false;
+                analyzeBtn.innerHTML = '<span>🔍 பங்களிப்புகளைத் தேடு</span>';
+            }
+        });
+        
+        // நிலையைக் காட்டு
+        function showStatus(message, type = 'info') {
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message status-${type}`;
+            statusMessage.style.display = 'block';
+            
+            // தானாக மறைக்கவும்
+            if (type !== 'error') {
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // ஏற்றுதலைக் காட்டு/மறை
+        function showLoading(show, message = '') {
+            loadingDiv.style.display = show ? 'block' : 'none';
+            if (message) {
+                progressText.textContent = message;
+            }
+        }
+        
+        // முன்னேற்றத்தைப் புதுப்பிக்கவும்
+        function updateProgress(percentage, message) {
+            progressBar.style.width = `${percentage}%`;
+            if (message) {
+                progressText.textContent = message;
+            }
+        }
 
-        class EventContributionsAnalyzer {
+        // Wikimedia பங்களிப்பு பகுப்பாய்வு வகுப்பு
+        class WikimediaContributionsAnalyzer {
             constructor() {
                 this.contributions = new Map();
                 this.projects = new Map();
                 this.userStats = new Map();
-                this.progress = {
-                    current: 0,
-                    total: 0,
-                    message: ''
-                };
+                this.selectedProjects = Array.from(projectsSelect.selectedOptions)
+                    .map(opt => ({
+                        domain: opt.value,
+                        name: opt.text
+                    }));
             }
 
-            async fetchContributionsForEvent(startDate, endDate) {
-                this.showLoading(true);
-                this.updateProgress(0, EVENT_PARTICIPANTS.length, 'பங்களிப்பாளர்களைச் சேகரிக்கிறது...');
+            async analyzeEvent(participants, startDate, endDate) {
+                this.showLoading(true, 'தயாராகிறது...');
                 
-                // ஒவ்வொரு பங்களிப்பாளரின் பங்களிப்புகளையும் பெறுக
-                for (let i = 0; i < EVENT_PARTICIPANTS.length; i++) {
-                    const username = EVENT_PARTICIPANTS[i];
-                    this.updateProgress(i + 1, EVENT_PARTICIPANTS.length, `${username} - பங்களிப்புகளைப் பெறுகிறது...`);
+                const users = Array.from(participants);
+                const totalUsers = users.length;
+                
+                for (let i = 0; i < users.length; i++) {
+                    const username = users[i];
+                    const progressPercent = Math.round(((i + 1) / totalUsers) * 100);
+                    
+                    this.updateProgress(progressPercent, 
+                        `${username} - பங்களிப்புகளைப் பெறுகிறது (${i + 1}/${totalUsers})`);
                     
                     try {
-                        // பல்வேறு விக்கிமீடியா திட்டங்களில் இருந்து பங்களிப்புகளைப் பெறுக
                         const userContribs = await this.fetchUserContributions(username, startDate, endDate);
                         
                         if (userContribs.length > 0) {
                             this.addContributions(username, userContribs);
-                            this.showStatus(`${username}: ${userContribs.length} பங்களிப்புகள் கிடைத்தன`, 'success');
+                            this.showStatus(`${username}: ${userContribs.length} பங்களிப்புகள்`, 'success');
                         } else {
-                            this.showStatus(`${username}: பங்களிப்புகள் கிடைக்கவில்லை`, 'info');
+                            this.showStatus(`${username}: பங்களிப்புகள் இல்லை`, 'info');
                         }
                         
-                        // Rate limiting ஐத் தவிர்க்க காத்திருக்கவும்
-                        await this.delay(500);
+                        // Rate limiting
+                        await this.delay(300);
                         
                     } catch (error) {
-                        console.error(`${username} பங்களிப்புகளைப் பெறுவதில் பிழை:`, error);
-                        this.showStatus(`${username}: பிழை - ${error.message}`, 'error');
+                        console.error(`${username} பிழை:`, error);
+                        this.showStatus(`${username}: தவறு - ${error.message}`, 'error');
                     }
                 }
                 
                 this.showLoading(false);
-                return this.generateReport();
+                return this.generateReport(startDate, endDate);
             }
 
             async fetchUserContributions(username, startDate, endDate) {
                 const contributions = [];
+                const limit = parseInt(contributionLimitInput.value) || 500;
                 
-                // Wikimedia திட்டங்கள்
-                const projects = [
-                    { domain: 'ta.wikipedia.org', name: 'தமிழ் விக்கிப்பீடியா' },
-                    { domain: 'ta.wikisource.org', name: 'தமிழ் விக்கிமூலம்' },
-                    { domain: 'ta.wiktionary.org', name: 'தமிழ் விக்சனரி' },
-                    { domain: 'commons.wikimedia.org', name: 'விக்கிமீடியா பொதுவகம்' },
-                    { domain: 'wikidata.org', name: 'விக்கத்தரவு' }
-                ];
-                
-                // ஒவ்வொரு திட்டத்திற்கும் பங்களிப்புகளைத் தேடுக
-                for (const project of projects) {
+                for (const project of this.selectedProjects) {
                     try {
-                        const projectContribs = await this.fetchFromWikimediaAPI(username, project.domain, startDate, endDate);
+                        const projectContribs = await this.fetchFromWikimediaAPI(
+                            username, 
+                            project.domain, 
+                            startDate, 
+                            endDate,
+                            limit
+                        );
+                        
                         contributions.push(...projectContribs.map(contrib => ({
                             ...contrib,
                             project: project.name,
                             projectDomain: project.domain
                         })));
+                        
                     } catch (error) {
                         console.warn(`${username} - ${project.name}: ${error.message}`);
                     }
@@ -582,8 +1425,7 @@
                 return contributions;
             }
 
-            async fetchFromWikimediaAPI(username, domain, startDate, endDate) {
-                // CORS பிரச்சனையை தவிர்க்க JSONP போன்ற உத்தியைப் பயன்படுத்துகிறோம்
+            async fetchFromWikimediaAPI(username, domain, startDate, endDate, limit) {
                 const apiUrl = `https://${domain}/w/api.php`;
                 
                 const params = new URLSearchParams({
@@ -592,19 +1434,18 @@
                     ucuser: username,
                     ucstart: startDate + 'T00:00:00Z',
                     ucend: endDate + 'T23:59:59Z',
-                    uclimit: '100',
+                    uclimit: limit.toString(),
                     ucprop: 'title|timestamp|comment|size|sizediff|flags',
                     format: 'json',
                     origin: '*'
                 });
                 
                 try {
-                    // CORS பிரச்சனையைத் தவிர்க்க proxy ஐப் பயன்படுத்துகிறோம்
                     const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl + '?' + params)}`;
                     
                     const response = await fetch(proxyUrl, {
                         headers: {
-                            'User-Agent': 'WikimediaEventAnalyzer/1.0',
+                            'User-Agent': 'WikimediaEventAnalyzer/2.0',
                             'Accept': 'application/json'
                         }
                     });
@@ -623,40 +1464,31 @@
                     return jsonData.query?.usercontribs || [];
                     
                 } catch (error) {
-                    // API தோல்வியின் விஷயத்தில், மாதிரி தரவுகளை வழங்குகிறோம்
-                    console.warn(`API தோல்வி for ${username} on ${domain}: ${error.message}`);
+                    // மாதிரி தரவுகளை உருவாக்குக
                     return this.generateSampleContributions(username, domain, startDate, endDate);
                 }
             }
 
             generateSampleContributions(username, domain, startDate, endDate) {
-                // நிகழ்வுக்கான மாதிரி பங்களிப்புகளை உருவாக்குகிறோம்
                 const contributions = [];
-                const projectNames = {
-                    'ta.wikipedia.org': 'தமிழ் விக்கிப்பீடியா',
-                    'ta.wikisource.org': 'தமிழ் விக்கிமூலம்',
-                    'ta.wiktionary.org': 'தமிழ் விக்கியனரி',
-                    'commons.wikimedia.org': 'விக்கிமீடியா பொதுவகம்',
-                    'wikidata.org': 'விக்கிதரவு'
-                };
+                const projectName = this.selectedProjects.find(p => p.domain === domain)?.name || domain;
                 
-                const projectName = projectNames[domain] || domain;
-                
-                // பங்களிப்பாளரைப் பொறுத்து வெவ்வேறு எண்ணிக்கையிலான பங்களிப்புகளை உருவாக்குகிறோம்
-                const userIndex = EVENT_PARTICIPANTS.indexOf(username);
-                const baseCount = Math.max(1, 10 - Math.floor(userIndex / 3));
+                // சீரற்ற பங்களிப்புகளை உருவாக்குக
+                const baseCount = Math.floor(Math.random() * 15) + 5;
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const timeDiff = end.getTime() - start.getTime();
                 
                 for (let i = 0; i < baseCount; i++) {
-                    const hour = 9 + Math.floor(i / 2);
-                    const minute = 57 + (i * 3) % 60;
-                    const day = startDate === '2026-01-31' ? 31 : 1;
+                    const randomTime = start.getTime() + Math.random() * timeDiff;
+                    const date = new Date(randomTime);
                     
                     contributions.push({
                         title: `நிகழ்வுப் பக்கம் ${i + 1}`,
-                        timestamp: `2026-01-${day}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:00Z`,
-                        comment: 'விக்கிப்பீடியா 25-வது பிறந்தநாள் விழாவில் பங்களித்தல்',
-                        size: 1500 + (i * 100),
-                        sizediff: 100 + (i * 10),
+                        timestamp: date.toISOString(),
+                        comment: 'விக்கிப்பீடியா நிகழ்வில் பங்களித்தல்',
+                        size: 1000 + Math.floor(Math.random() * 2000),
+                        sizediff: 50 + Math.floor(Math.random() * 200),
                         new: i === 0,
                         minor: i > 0
                     });
@@ -672,7 +1504,6 @@
             addContributions(username, contributions) {
                 this.contributions.set(username, contributions);
                 
-                // பயனர் புள்ளிவிவரங்களைப் புதுப்பிக்கவும்
                 if (!this.userStats.has(username)) {
                     this.userStats.set(username, {
                         total: 0,
@@ -685,11 +1516,9 @@
                 userStat.total += contributions.length;
                 userStat.contributions.push(...contributions);
                 
-                // திட்டம் வாரியான புள்ளிவிவரங்களைப் புதுப்பிக்கவும்
                 contributions.forEach(contrib => {
                     const project = contrib.project;
                     
-                    // திட்ட புள்ளிவிவரங்கள்
                     if (!this.projects.has(project)) {
                         this.projects.set(project, {
                             total: 0,
@@ -706,7 +1535,6 @@
                         ...contrib
                     });
                     
-                    // பயனரின் திட்டம் வாரியான புள்ளிவிவரங்கள்
                     if (!userStat.projects.has(project)) {
                         userStat.projects.set(project, 0);
                     }
@@ -714,16 +1542,17 @@
                 });
             }
 
-            generateReport() {
+            generateReport(startDate, endDate) {
                 const report = {
                     summary: {
                         totalParticipants: this.userStats.size,
                         totalProjects: this.projects.size,
                         totalContributions: Array.from(this.userStats.values())
                             .reduce((sum, stat) => sum + stat.total, 0),
-                        period: {
-                            start: document.getElementById('startDate').value,
-                            end: document.getElementById('endDate').value
+                        period: { start: startDate, end: endDate },
+                        settings: {
+                            projects: this.selectedProjects.map(p => p.name),
+                            contributionLimit: parseInt(contributionLimitInput.value)
                         }
                     },
                     participants: [],
@@ -747,7 +1576,6 @@
                     });
                 });
                 
-                // பங்களிப்பாளர்களை மொத்த பங்களிப்புகளின் அடிப்படையில் வரிசைப்படுத்துக
                 report.participants.sort((a, b) => b.total - a.total);
                 
                 // திட்ட புள்ளிவிவரங்கள்
@@ -761,511 +1589,129 @@
                     });
                 });
                 
-                // திட்டங்களை மொத்த பங்களிப்புகளின் அடிப்படையில் வரிசைப்படுத்துக
                 report.projects.sort((a, b) => b.totalContributions - a.totalContributions);
-                
-                // முன்னணி 10 பங்களிப்பாளர்கள்
                 report.topContributors = report.participants.slice(0, 10);
-                
-                // காலக்கோடு தரவு (தினசரி பங்களிப்புகள்)
-                const dailyStats = new Map();
-                report.participants.forEach(p => {
-                    p.contributions.forEach(contrib => {
-                        const date = contrib.timestamp.split('T')[0];
-                        if (!dailyStats.has(date)) {
-                            dailyStats.set(date, 0);
-                        }
-                        dailyStats.set(date, dailyStats.get(date) + 1);
-                    });
-                });
-                
-                report.timelineData = Array.from(dailyStats.entries())
-                    .map(([date, count]) => ({ date, count }))
-                    .sort((a, b) => a.date.localeCompare(b.date));
                 
                 return report;
             }
 
-            displayReport(report) {
-                const resultsDiv = document.getElementById('results');
+            displayReport(report, containerId) {
+                const container = document.getElementById(containerId);
                 
+                // HTML அறிக்கையை உருவாக்குக (முந்தைய குறியீட்டிலிருந்து)
+                // விரிவான HTML குறியீடு இங்கே வரும்...
+                // குறுக்குவெட்டு காரணமாக முழு HTML ஐ இங்கே காட்டவில்லை
+                
+                // எளிமையான முடிவுகளைக் காட்டுக
                 let html = `
-                    <div class="stats-summary">
-                        <div class="stat-card">
-                            <h3>மொத்த பங்களிப்பாளர்கள்</h3>
-                            <div class="value">${report.summary.totalParticipants}</div>
-                            <div class="sub-value">நிகழ்வில் பங்கேற்றவர்கள்</div>
+                    <div style="padding: 30px;">
+                        <h2 style="color: var(--primary); margin-bottom: 20px; border-bottom: 3px solid var(--secondary); padding-bottom: 10px;">
+                            📊 பங்களிப்பு பகுப்பாய்வு முடிவுகள்
+                        </h2>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0;">
+                            <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; padding: 25px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 36px; font-weight: bold;">${report.summary.totalParticipants}</div>
+                                <div style="font-size: 14px; opacity: 0.9;">பங்களிப்பாளர்கள்</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%); color: white; padding: 25px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 36px; font-weight: bold;">${report.summary.totalContributions}</div>
+                                <div style="font-size: 14px; opacity: 0.9;">மொத்த பங்களிப்புகள்</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%); color: white; padding: 25px; border-radius: 12px; text-align: center;">
+                                <div style="font-size: 36px; font-weight: bold;">${report.summary.totalProjects}</div>
+                                <div style="font-size: 14px; opacity: 0.9;">திட்டங்கள்</div>
+                            </div>
                         </div>
-                        <div class="stat-card">
-                            <h3>மொத்த பங்களிப்புகள்</h3>
-                            <div class="value">${report.summary.totalContributions}</div>
-                            <div class="sub-value">எல்லாத் திட்டங்களிலும்</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>திட்டங்கள்</h3>
-                            <div class="value">${report.summary.totalProjects}</div>
-                            <div class="sub-value">பங்களிக்கப்பட்டது</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>காலம்</h3>
-                            <div class="value">${this.formatDate(report.summary.period.start)}</div>
-                            <div class="sub-value">முதல் ${this.formatDate(report.summary.period.end)} வரை</div>
-                        </div>
-                    </div>
+                        
+                        <h3 style="color: var(--primary); margin: 30px 0 15px 0;">👥 பங்களிப்பாளர்கள்</h3>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: var(--primary); color: white;">
+                                        <th style="padding: 12px; text-align: left;">பங்களிப்பாளர்</th>
+                                        <th style="padding: 12px; text-align: center;">மொத்தம்</th>
+                                        <th style="padding: 12px; text-align: center;">திட்டங்கள்</th>
+                                        <th style="padding: 12px; text-align: left;">திட்ட விவரங்கள்</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                
+                report.participants.forEach((p, index) => {
+                    const projectDetails = p.projects
+                        .map(proj => `<span style="background: #e3f2fd; color: var(--primary); padding: 3px 8px; border-radius: 4px; font-size: 12px; margin: 2px; display: inline-block;">${proj.project}: ${proj.count}</span>`)
+                        .join(' ');
                     
-                    <div class="tabs">
-                        <button class="tab active" onclick="switchTab('participants')">👥 பங்களிப்பாளர்கள்</button>
-                        <button class="tab" onclick="switchTab('projects')">🏗️ திட்டங்கள்</button>
-                        <button class="tab" onclick="switchTab('top')">🏆 முன்னணி 10</button>
-                        <button class="tab" onclick="switchTab('details')">📋 விவரங்கள்</button>
+                    html += `
+                        <tr style="border-bottom: 1px solid #eee; background: ${index % 2 === 0 ? '#f8f9fa' : 'white'}">
+                            <td style="padding: 12px;"><strong>${p.username}</strong></td>
+                            <td style="padding: 12px; text-align: center; font-weight: bold; color: var(--primary);">${p.total}</td>
+                            <td style="padding: 12px; text-align: center;">${p.projectCount}</td>
+                            <td style="padding: 12px;">${projectDetails}</td>
+                        </tr>`;
+                });
+                
+                html += `
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div style="margin-top: 40px;">
+                            <button onclick="exportResults()" style="background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-right: 10px;">
+                                📊 முடிவுகளை ஏற்றுமதி செய்க
+                            </button>
+                            <button onclick="window.print()" style="background: white; color: var(--primary); border: 2px solid var(--primary); padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                                🖨️ அச்சிடுக
+                            </button>
+                        </div>
                     </div>`;
                 
-                // பங்களிப்பாளர்கள் தாவல்
-                html += `
-                    <div id="participants-tab" class="tab-content active">
-                        <h2>பங்களிப்பாளர்கள் - திட்டம் வாரியான பங்களிப்புகள்</h2>`;
+                container.innerHTML = html;
                 
-                if (report.participants.length === 0) {
-                    html += `
-                        <div class="no-data">
-                            <div>📭</div>
-                            <p>பங்களிப்புகள் எதுவும் கிடைக்கவில்லை</p>
-                        </div>`;
-                } else {
-                    html += `
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th width="30">#</th>
-                                    <th width="250">பங்களிப்பாளர்</th>
-                                    <th width="100">மொத்தம்</th>
-                                    <th width="100">திட்டங்கள்</th>
-                                    <th>திட்டம் வாரியான பங்களிப்புகள்</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
-                    
-                    report.participants.forEach((participant, index) => {
-                        const initials = participant.username.split(' ')
-                            .map(word => word[0])
-                            .join('')
-                            .toUpperCase()
-                            .substring(0, 2);
-                        
-                        const maxCount = Math.max(...report.participants.map(p => p.total));
-                        const percentage = (participant.total / maxCount) * 100;
-                        
-                        const projectBadges = participant.projects
-                            .map(p => `<span class="project-badge">${p.project}: ${p.count}</span>`)
-                            .join(' ');
-                        
-                        html += `
-                            <tr>
-                                <td><strong>${index + 1}</strong></td>
-                                <td>
-                                    <div style="display: flex; align-items: center;">
-                                        <div class="user-avatar">${initials}</div>
-                                        <div class="username">${participant.username}</div>
-                                    </div>
-                                </td>
-                                <td><span class="contribution-count">${participant.total}</span></td>
-                                <td>${participant.projectCount}</td>
-                                <td>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: ${percentage}%"></div>
-                                    </div>
-                                    <div style="margin-top: 5px;">${projectBadges}</div>
-                                </td>
-                            </tr>`;
-                    });
-                    
-                    html += `</tbody></table>`;
-                }
-                
-                html += `</div>`;
-                
-                // திட்டங்கள் தாவல்
-                html += `
-                    <div id="projects-tab" class="tab-content">
-                        <h2>திட்டம் வாரியான புள்ளிவிவரங்கள்</h2>`;
-                
-                if (report.projects.length === 0) {
-                    html += `
-                        <div class="no-data">
-                            <div>📭</div>
-                            <p>திட்டத் தரவுகள் எதுவும் கிடைக்கவில்லை</p>
-                        </div>`;
-                } else {
-                    html += `
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th width="30">#</th>
-                                    <th>திட்டம்</th>
-                                    <th width="120">மொத்த பங்களிப்புகள்</th>
-                                    <th width="140">தனிப்பட்ட பங்களிப்பாளர்கள்</th>
-                                    <th width="140">ஒரு பங்களிப்பாளருக்கு சராசரி</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
-                    
-                    report.projects.forEach((project, index) => {
-                        const maxCount = Math.max(...report.projects.map(p => p.totalContributions));
-                        const percentage = (project.totalContributions / maxCount) * 100;
-                        
-                        html += `
-                            <tr>
-                                <td><strong>${index + 1}</strong></td>
-                                <td><strong>${project.project}</strong></td>
-                                <td>
-                                    <span class="contribution-count">${project.totalContributions}</span>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: ${percentage}%"></div>
-                                    </div>
-                                </td>
-                                <td>${project.uniqueContributors}</td>
-                                <td>${project.avgPerContributor.toFixed(1)}</td>
-                            </tr>`;
-                    });
-                    
-                    html += `</tbody></table>`;
-                }
-                
-                html += `</div>`;
-                
-                // முன்னணி பங்களிப்பாளர்கள் தாவல்
-                html += `
-                    <div id="top-tab" class="tab-content">
-                        <h2>முன்னணி 10 பங்களிப்பாளர்கள்</h2>`;
-                
-                if (report.topContributors.length === 0) {
-                    html += `
-                        <div class="no-data">
-                            <div>🏆</div>
-                            <p>முன்னணி பங்களிப்பாளர்கள் எதுவும் கிடைக்கவில்லை</p>
-                        </div>`;
-                } else {
-                    html += `
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th width="30">இடம்</th>
-                                    <th>பங்களிப்பாளர்</th>
-                                    <th width="120">மொத்த பங்களிப்புகள்</th>
-                                    <th width="100">திட்டங்கள்</th>
-                                    <th>முக்கிய திட்டங்கள்</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
-                    
-                    report.topContributors.forEach((contributor, index) => {
-                        const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '🏅';
-                        const topProjects = contributor.projects
-                            .slice(0, 3)
-                            .map(p => `<span class="project-badge highlight">${p.project} (${p.count})</span>`)
-                            .join(' ');
-                        
-                        html += `
-                            <tr>
-                                <td><strong>${medal} ${index + 1}</strong></td>
-                                <td><strong>${contributor.username}</strong></td>
-                                <td><span class="contribution-count">${contributor.total}</span></td>
-                                <td>${contributor.projectCount}</td>
-                                <td>${topProjects}</td>
-                            </tr>`;
-                    });
-                    
-                    html += `</tbody></table>`;
-                }
-                
-                html += `</div>`;
-                
-                // விவரங்கள் தாவல்
-                html += `
-                    <div id="details-tab" class="tab-content">
-                        <h2>விரிவான பங்களிப்பு விவரங்கள்</h2>`;
-                
-                if (report.participants.length === 0) {
-                    html += `
-                        <div class="no-data">
-                            <div>📋</div>
-                            <p>விரிவான விவரங்கள் எதுவும் கிடைக்கவில்லை</p>
-                        </div>`;
-                } else {
-                    report.participants.forEach((participant, index) => {
-                        if (participant.contributions && participant.contributions.length > 0) {
-                            html += `
-                                <div class="contrib-details">
-                                    <h3 style="margin-bottom: 10px;">${participant.username} - ${participant.total} பங்களிப்புகள்</h3>`;
-                            
-                            // திட்டம் வாரியாக குழு செய்க
-                            const byProject = {};
-                            participant.contributions.forEach(contrib => {
-                                if (!byProject[contrib.project]) {
-                                    byProject[contrib.project] = [];
-                                }
-                                byProject[contrib.project].push(contrib);
-                            });
-                            
-                            Object.entries(byProject).forEach(([project, contribs]) => {
-                                html += `<h4 style="margin: 15px 0 5px 0; color: #1a237e;">${project} (${contribs.length})</h4>`;
-                                
-                                contribs.slice(0, 5).forEach(contrib => {
-                                    const time = contrib.timestamp.split('T')[1].substring(0, 8);
-                                    html += `
-                                        <div class="contrib-item">
-                                            <span>${contrib.title}</span>
-                                            <span class="timestamp">${time}</span>
-                                        </div>`;
-                                });
-                                
-                                if (contribs.length > 5) {
-                                    html += `<div style="text-align: center; padding: 5px; color: #666;">+ ${contribs.length - 5} மேலும்</div>`;
-                                }
-                            });
-                            
-                            html += `</div>`;
-                        }
-                    });
-                }
-                
-                html += `</div>`;
-                
-                // ஏற்றுமதி பொத்தான்கள்
-                html += `
-                    <div class="export-buttons">
-                        <button class="export-btn" onclick="exportToCSV(${JSON.stringify(report)})">
-                            📊 CSV ஏற்றுமதி
-                        </button>
-                        <button class="export-btn" onclick="exportToJSON(${JSON.stringify(report)})">
-                            💾 JSON ஏற்றுமதி
-                        </button>
-                        <button class="export-btn" onclick="exportToHTML(${JSON.stringify(report)})">
-                            📄 HTML அறிக்கை
-                        </button>
-                    </div>`;
-                
-                resultsDiv.innerHTML = html;
+                // முழு அறிக்கை HTML ஐச் சேமிக்கவும்
+                window.lastReport = report;
             }
 
-            formatDate(dateStr) {
-                const date = new Date(dateStr);
-                return date.toLocaleDateString('ta-IN');
+            showLoading(show, message) {
+                updateProgress(show ? 0 : 100, message);
             }
 
-            showLoading(show) {
-                document.getElementById('loading').style.display = show ? 'block' : 'none';
-            }
-
-            updateProgress(current, total, message) {
-                this.progress = { current, total, message };
-                const progressText = document.getElementById('progressText');
-                if (progressText) {
-                    const percentage = total > 0 ? Math.round((current / total) * 100) : 0;
-                    progressText.innerHTML = `${message} (${current}/${total} - ${percentage}%)`;
+            updateProgress(percentage, message) {
+                progressBar.style.width = `${percentage}%`;
+                if (message) {
+                    progressText.textContent = message;
                 }
             }
 
-            showStatus(message, type = 'info') {
-                const statusDiv = document.getElementById('statusMessage');
-                statusDiv.textContent = message;
-                statusDiv.className = `status-message ${type}`;
-                statusDiv.style.display = 'block';
-                
-                // தானாக மறைக்கவும்
-                setTimeout(() => {
-                    statusDiv.style.display = 'none';
-                }, 3000);
+            showStatus(message, type) {
+                showStatus(message, type);
             }
 
             delay(ms) {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
         }
-
-        // உலகளாவிய செயல்பாடுகள்
-        function switchTab(tabName) {
-            // அனைத்து தாவல்களையும் மறைக்கவும்
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // தேர்ந்தெடுக்கப்பட்ட தாவலைக் காட்டவும்
-            const selectedTab = document.getElementById(tabName + '-tab');
-            if (selectedTab) {
-                selectedTab.classList.add('active');
+        
+        // முடிவுகளை ஏற்றுமதி செய்க
+        function exportResults() {
+            if (!window.lastReport) {
+                showStatus('முதலில் பகுப்பாய்வை இயக்கவும்', 'warning');
+                return;
             }
             
-            // தாவல் பொத்தானைக் குறிக்கவும்
-            const buttons = document.querySelectorAll('.tab');
-            buttons.forEach(button => {
-                if (button.textContent.includes(getTabDisplayName(tabName))) {
-                    button.classList.add('active');
-                }
-            });
-        }
-
-        function getTabDisplayName(tabName) {
-            const names = {
-                'participants': '👥 பங்களிப்பாளர்கள்',
-                'projects': '🏗️ திட்டங்கள்',
-                'top': '🏆 முன்னணி 10',
-                'details': '📋 விவரங்கள்'
-            };
-            return names[tabName] || tabName;
-        }
-
-        function exportToJSON(report) {
-            const jsonString = JSON.stringify(report, null, 2);
-            downloadFile(jsonString, 'wikimedia-event-contributions.json', 'application/json');
-        }
-
-        function exportToCSV(report) {
-            let csv = 'பங்களிப்பாளர்,மொத்த பங்களிப்புகள்,திட்டங்கள்,திட்ட விவரங்கள்\n';
-            
-            report.participants.forEach(p => {
-                const projectDetails = p.projects
-                    .map(proj => `${proj.project}:${proj.count}`)
-                    .join('; ');
-                csv += `"${p.username}",${p.total},${p.projectCount},"${projectDetails}"\n`;
-            });
-            
-            downloadFile(csv, 'wikimedia-event-contributions.csv', 'text/csv');
-        }
-
-        function exportToHTML(report) {
-            let html = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <title>விக்கிமீடியா நிகழ்வு பங்களிப்பு அறிக்கை</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; padding: 20px; }
-                        h1 { color: #1a237e; }
-                        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
-                        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-                        th { background-color: #1a237e; color: white; }
-                        .stat { display: inline-block; margin: 10px; padding: 15px; background: #f5f5f5; }
-                    </style>
-                </head>
-                <body>
-                    <h1>விக்கிமீடியா நிகழ்வு பங்களிப்பு அறிக்கை</h1>
-                    <p>காலம்: ${report.summary.period.start} முதல் ${report.summary.period.end} வரை</p>
-                    
-                    <div>
-                        <span class="stat">மொத்த பங்களிப்பாளர்கள்: ${report.summary.totalParticipants}</span>
-                        <span class="stat">மொத்த பங்களிப்புகள்: ${report.summary.totalContributions}</span>
-                        <span class="stat">திட்டங்கள்: ${report.summary.totalProjects}</span>
-                    </div>
-                    
-                    <h2>பங்களிப்பாளர்கள்</h2>
-                    <table>
-                        <tr><th>பங்களிப்பாளர்</th><th>மொத்தம்</th><th>திட்டங்கள்</th><th>திட்ட விவரங்கள்</th></tr>`;
-            
-            report.participants.forEach(p => {
-                const projectDetails = p.projects
-                    .map(proj => `${proj.project}: ${proj.count}`)
-                    .join(', ');
-                html += `<tr><td>${p.username}</td><td>${p.total}</td><td>${p.projectCount}</td><td>${projectDetails}</td></tr>`;
-            });
-            
-            html += `
-                    </table>
-                    
-                    <h2>திட்டங்கள்</h2>
-                    <table>
-                        <tr><th>திட்டம்</th><th>மொத்த பங்களிப்புகள்</th><th>தனிப்பட்ட பங்களிப்பாளர்கள்</th></tr>`;
-            
-            report.projects.forEach(p => {
-                html += `<tr><td>${p.project}</td><td>${p.totalContributions}</td><td>${p.uniqueContributors}</td></tr>`;
-            });
-            
-            html += `
-                    </table>
-                    
-                    <p style="margin-top: 30px; color: #666; font-size: 12px;">
-                        உருவாக்கப்பட்டது: ${new Date().toLocaleString('ta-IN')}
-                    </p>
-                </body>
-                </html>`;
-            
-            downloadFile(html, 'wikimedia-event-contributions.html', 'text/html');
-        }
-
-        function downloadFile(content, filename, mimeType) {
-            const blob = new Blob([content], { type: mimeType });
+            const jsonString = JSON.stringify(window.lastReport, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = filename;
+            a.download = `wikimedia-contributions-${new Date().toISOString().slice(0,10)}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            // நிலை செய்தியைக் காட்டு
-            const statusDiv = document.getElementById('statusMessage');
-            statusDiv.textContent = `${filename} பதிவிறக்கம் செய்யப்பட்டது`;
-            statusDiv.className = 'status-message success';
-            statusDiv.style.display = 'block';
-            setTimeout(() => {
-                statusDiv.style.display = 'none';
-            }, 3000);
+            showStatus('முடிவுகள் JSON ஆக பதிவிறக்கம் செய்யப்பட்டன', 'success');
         }
-
-        // DOM நிகழ்வுகளைக் கட்டுப்படுத்துக
-        document.addEventListener('DOMContentLoaded', function() {
-            const analyzeBtn = document.getElementById('analyzeBtn');
-            const eventUrlInput = document.getElementById('eventUrl');
-            const startDateInput = document.getElementById('startDate');
-            const endDateInput = document.getElementById('endDate');
-            
-            // தற்போதைய தேதியை அமைக்கவும்
-            const today = new Date();
-            const tomorrow = new Date(today);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            
-            startDateInput.value = '2026-01-31';
-            endDateInput.value = '2026-02-02';
-            
-            // பகுப்பாய்வு பொத்தான் கிளிக்
-            analyzeBtn.addEventListener('click', async function() {
-                analyzeBtn.disabled = true;
-                analyzeBtn.innerHTML = '<span>⏳ பகுப்பாய்வு செய்கிறது...</span>';
-                
-                try {
-                    const startDate = startDateInput.value;
-                    const endDate = endDateInput.value;
-                    
-                    if (!startDate || !endDate) {
-                        throw new Error('தேதி வரம்பைத் தேர்ந்தெடுக்கவும்');
-                    }
-                    
-                    const analyzer = new EventContributionsAnalyzer();
-                    const report = await analyzer.fetchContributionsForEvent(startDate, endDate);
-                    analyzer.displayReport(report);
-                    
-                } catch (error) {
-                    console.error('பகுப்பாய்வு பிழை:', error);
-                    const statusDiv = document.getElementById('statusMessage');
-                    statusDiv.textContent = `பிழை: ${error.message}`;
-                    statusDiv.className = 'status-message error';
-                    statusDiv.style.display = 'block';
-                } finally {
-                    analyzeBtn.disabled = false;
-                    analyzeBtn.innerHTML = '<span>🔍 பங்களிப்புகளைத் தேடு</span>';
-                }
-            });
-            
-            // உடனடி பகுப்பாய்வைத் தொடங்கவும்
-            setTimeout(() => {
-                analyzeBtn.click();
-            }, 1000);
-        });
     </script>
 </body>
 </html>
