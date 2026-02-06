@@ -141,4 +141,11 @@ async function fetchGlobalStats() {
     }
 
     document.getElementById("loader").style.display = "none";
-    d
+    document.getElementById("summary").style.display = "block";
+    document.getElementById("summary").innerText =
+        `அனைத்து பயனர்களின் மொத்தப் பங்களிப்புகள்: ${grandTotal}`;
+}
+</script>
+
+</body>
+</html>
