@@ -2,36 +2,37 @@
 <html lang="ta">
 <head>
     <meta charset="UTF-8">
-    <title>விக்கிமீடியா பங்களிப்பாளர் புள்ளிவிவரம்</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>விக்கிமீடியா புள்ளிவிவரக் கருவி</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; padding: 20px; }
-        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        h2 { color: #2c3e50; text-align: center; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
-        .input-group { background: #f9f9f9; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        textarea { width: 100%; height: 150px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
-        .date-pickers { display: flex; gap: 20px; margin: 15px 0; align-items: center; }
-        input[type="month"] { padding: 8px; border-radius: 5px; border: 1px solid #ddd; }
-        button { background: #27ae60; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; width: 100%; }
-        button:hover { background: #219150; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; padding: 20px; color: #333; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.1); }
+        h2 { color: #0056b3; text-align: center; border-bottom: 2px solid #0056b3; padding-bottom: 10px; }
+        .input-area { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        textarea { width: 100%; height: 120px; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+        .controls { display: flex; gap: 15px; margin-top: 15px; align-items: center; flex-wrap: wrap; }
+        input[type="month"] { padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
+        button { background: #007bff; color: white; border: none; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 15px; }
+        button:hover { background: #0056b3; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
         th, td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
-        th { background: #3498db; color: white; }
-        tr:nth-child(even) { background: #f8f9fa; }
-        .project-tag { display: inline-block; background: #e8f0fe; color: #1967d2; padding: 3px 8px; border-radius: 4px; font-size: 11px; margin: 2px; font-weight: bold; border: 1px solid #c2d7ff; }
-        #loader { display: none; text-align: center; font-weight: bold; color: #e67e22; padding: 20px; }
-        .total-box { margin-top: 20px; padding: 15px; background: #d4edda; border-radius: 8px; text-align: center; font-size: 1.2em; font-weight: bold; color: #155724; }
+        th { background: #007bff; color: white; }
+        tr:nth-child(even) { background: #f2f2f2; }
+        .tag { display: inline-block; background: #e1f5fe; color: #0277bd; padding: 3px 8px; border-radius: 4px; font-size: 11px; margin: 2px; border: 1px solid #b3e5fc; font-weight: bold; }
+        #loading { display: none; text-align: center; font-weight: bold; color: #d9534f; padding: 15px; }
+        .summary-box { margin-top: 20px; padding: 15px; background: #d4edda; color: #155724; border-radius: 8px; text-align: center; font-size: 1.2em; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>விக்கிமீடியா பங்களிப்பாளர் புள்ளிவிவரக் கருவி</h2>
+    <h2>விக்கிமீடியா திட்டவாரியான புள்ளிவிவரம் (CentralAuth Style)</h2>
 
-    <div class="input-group">
-        <label><b>பயனர் பெயர்கள் (கையொப்பத்துடன் சேர்த்தும் உள்ளிடலாம்):</b></label>
+    <div class="input-area">
+        <label><b>பயனர் பெயர்கள் (வரிசைக்கு ஒன்று):</b></label>
         <textarea id="userList" placeholder="--Subisena (பேச்சு) 09:57, 31 சனவரி 2026 (UTC)..."></textarea>
         
-        <div class="date-pickers">
+        <div class="controls">
             <div>
                 <label>தொடக்கம்: </label>
                 <input type="month" id="startMonth" value="2026-01">
@@ -40,106 +41,110 @@
                 <label>முடிவு: </label>
                 <input type="month" id="endMonth" value="2026-01">
             </div>
-            <div style="flex-grow: 1; text-align: right;">
-                <small>*தேர்ந்தெடுக்கப்பட்ட மாதத்தின் முழு தரவுகளும் கணக்கிடப்படும்.</small>
-            </div>
+            <button onclick="getCentralStats()">தரவுகளைப் பெறு</button>
         </div>
-        <button onclick="fetchGlobalStats()">புள்ளிவிவரத்தை உருவாக்கு</button>
     </div>
 
-    <div id="loader">தரவுகள் சேகரிக்கப்படுகின்றன... தயவுசெய்து காத்திருக்கவும்...</div>
+    <div id="loading">CentralAuth தரவுகள் சேகரிக்கப்படுகின்றன... தயவுசெய்து காத்திருக்கவும்...</div>
 
-    <table id="resultsTable">
+    <table id="resultTable">
         <thead>
             <tr>
                 <th style="width: 50px;">வ.எண்</th>
                 <th>பயனர் பெயர்</th>
-                <th>திட்டங்கள் வாரியாக (பங்களிப்பு எண்ணிக்கை)</th>
+                <th>விக்கித் திட்டங்கள் (பங்களிப்புகள்)</th>
                 <th style="width: 100px;">மொத்தம்</th>
             </tr>
         </thead>
         <tbody id="tableBody"></tbody>
     </table>
 
-    <div id="summary" class="total-box" style="display:none;"></div>
+    <div id="finalSummary" class="summary-box" style="display:none;"></div>
 </div>
 
 <script>
-    // பயனர் பெயரில் உள்ள குப்பைகளை நீக்கும் நுட்பம்
-    function getCleanUsername(text) {
-        if (!text) return "";
-        let clean = text.replace(/--/g, "").trim();
-        // விக்கிப்பீடியா கையொப்பத்தில் உள்ள நேரம் மற்றும் பேச்சுப் பக்க இணைப்புகளை நீக்குகிறது
-        clean = clean.split('(')[0].split('0')[0].split('1')[0].split('2')[0].trim();
-        return clean;
+    // பயனர் பெயரில் உள்ள குறியீடுகளை நீக்கும் செயல்பாடு
+    function cleanName(rawText) {
+        if (!rawText) return "";
+        // கையொப்பத்தில் உள்ள தேவையற்றவற்றை நீக்குதல்
+        let name = rawText.replace(/--/g, "").trim();
+        name = name.split('(')[0].split(/[0-9]/)[0].trim(); 
+        return name;
     }
 
-    async function fetchGlobalStats() {
-        const rawInput = document.getElementById('userList').value;
-        const lines = rawInput.split('\n').filter(l => l.trim() !== "");
-        const startVal = document.getElementById('startMonth').value;
-        const endVal = document.getElementById('endMonth').value;
+    async function getCentralStats() {
+        const input = document.getElementById('userList').value;
+        const rawLines = input.split('\n').filter(l => l.trim() !== "");
+        const startMonth = document.getElementById('startMonth').value;
+        const endMonth = document.getElementById('endMonth').value;
         
-        const dateFrom = `${startVal}-01`;
-        const dateTo = `${endVal}-31`; // API 31-ஆம் தேதி வரை தானாகவே ஏற்கும்
+        const dateFrom = `${startMonth}-01T00:00:00Z`;
+        const dateTo = `${endMonth}-28T23:59:59Z`; // பிப்ரவரி கருதி 28 அல்லது 31 ஆக API ஏற்கும்
 
-        const loader = document.getElementById('loader');
+        const loader = document.getElementById('loading');
         const tableBody = document.getElementById('tableBody');
-        const summary = document.getElementById('summary');
+        const summary = document.getElementById('finalSummary');
 
         loader.style.display = "block";
         tableBody.innerHTML = "";
         summary.style.display = "none";
 
-        let grandTotal = 0;
+        let allUsersTotal = 0;
 
-        for (let i = 0; i < lines.length; i++) {
-            const user = getCleanUsername(lines[i]);
+        for (let i = 0; i < rawLines.length; i++) {
+            const user = cleanName(rawLines[i]);
             if (!user) continue;
 
             let userTotal = 0;
-            let projectDisplay = "";
+            let projectBreakdown = "";
 
             try {
-                // XTools Global API - பயனர் எந்தெந்த திட்டங்களில் கணக்கு வைத்துள்ளார் எனத் தேடுகிறது
-                const globalUrl = `https://xtools.wmcloud.org/api/user/pages_count/global/${encodeURIComponent(user)}`;
-                const gRes = await fetch(globalUrl);
-                const gData = await gRes.json();
+                // விக்கிமீடியா மைய API (Meta-Wiki) மூலம் பயனர் பங்களித்துள்ள அனைத்து திட்டங்களையும் பெறுதல்
+                const centralUrl = `https://meta.wikimedia.org/w/api.php?action=query&meta=centralauth&ucuser=${encodeURIComponent(user)}&format=json&origin=*`;
+                const response = await fetch(centralUrl);
+                const data = await response.json();
 
-                if (gData.projects) {
-                    const projectList = Object.keys(gData.projects);
-                    
-                    // ஒவ்வொரு திட்டத்திலும் குறிப்பிட்ட தேதியில் எத்தனை பங்களிப்புகள் எனத் தேடுகிறது
-                    for (let proj of projectList) {
-                        const statsUrl = `https://xtools.wmcloud.org/api/project/user_stats/${proj}/${encodeURIComponent(user)}/${dateFrom}/${dateTo}`;
+                if (data.query && data.query.centralauth && data.query.centralauth.attached) {
+                    const projects = data.query.centralauth.attached;
+
+                    // ஒவ்வொரு இணைக்கப்பட்ட திட்டத்திலும் குறிப்பிட்ட காலத்தில் செய்த பங்களிப்புகளைச் சரிபார்க்க
+                    for (let proj of projects) {
+                        const wikiUrl = proj.url.replace("http://", "https://") + "/w/api.php";
+                        // குறிப்பிட்ட கால இடைவெளிக்கான பங்களிப்புகளைக் கேட்கிறோம்
+                        const statsUrl = `${wikiUrl}?action=query&list=usercontribs&ucuser=${encodeURIComponent(user)}&ucstart=${dateTo}&ucend=${dateFrom}&uclimit=500&format=json&origin=*`;
+                        
                         const sRes = await fetch(statsUrl);
                         const sData = await sRes.json();
 
-                        const count = sData.total_res || 0;
-                        if (count > 0) {
-                            userTotal += count;
-                            projectDisplay += `<span class="project-tag">${proj}: ${count}</span>`;
+                        if (sData.query && sData.query.usercontribs) {
+                            const count = sData.query.usercontribs.length;
+                            if (count > 0) {
+                                userTotal += count;
+                                // திட்டத்தின் சுருக்கப் பெயரை மட்டும் காட்ட (எ.கா: ta.wikipedia)
+                                const shortName = proj.wiki.replace("wiki", ".wikipedia").replace("wiktionary", ".wiktionary");
+                                projectBreakdown += `<span class="tag">${shortName}: ${count}</span>`;
+                            }
                         }
                     }
                 }
 
-                grandTotal += userTotal;
+                allUsersTotal += userTotal;
                 tableBody.innerHTML += `
                     <tr>
                         <td>${i + 1}</td>
                         <td><b>${user}</b></td>
-                        <td>${projectDisplay || '<span style="color:gray;">பங்களிப்புகள் இல்லை</span>'}</td>
-                        <td><b style="color:#2980b9">${userTotal}</b></td>
+                        <td>${projectBreakdown || '<i style="color:gray;">இந்தக் காலக்கட்டத்தில் பங்களிப்புகள் இல்லை</i>'}</td>
+                        <td><b style="color:#007bff">${userTotal}</b></td>
                     </tr>`;
 
             } catch (err) {
-                console.error("Error fetching for: " + user, err);
+                console.error("Error for " + user, err);
             }
         }
 
         loader.style.display = "none";
         summary.style.display = "block";
-        summary.innerHTML = `அனைத்து பயனர்களின் ஒட்டுமொத்தப் பங்களிப்புகள்: ${grandTotal}`;
+        summary.innerHTML = `அனைத்து பயனர்களின் மொத்தப் பங்களிப்புகள்: ${allUsersTotal}`;
     }
 </script>
 
