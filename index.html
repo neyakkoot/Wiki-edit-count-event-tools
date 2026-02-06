@@ -28,9 +28,9 @@
     <h2>விக்கிமீடியா பங்களிப்பாளர் புள்ளிவிவரக் கருவி</h2>
 
     <div class="input-group">
-        <label><b>பயனர் பெயர்கள் (கையொப்பத்துடன் சேர்த்தும் உள்ளிடலாம்):</b></label>
-        <textarea id="userList" placeholder="--Subisena (பேச்சு) 09:57, 31 சனவரி 2026 (UTC)..."></textarea>
-        
+        <label><b>பயனர் பெயர்கள்:</b></label>
+        <textarea id="userList" placeholder="Subisena"></textarea>
+
         <div class="date-pickers">
             <div>
                 <label>தொடக்கம்: </label>
@@ -41,21 +41,21 @@
                 <input type="month" id="endMonth" value="2026-01">
             </div>
             <div style="flex-grow: 1; text-align: right;">
-                <small>*தேர்ந்தெடுக்கப்பட்ட மாதத்தின் முழு தரவுகளும் கணக்கிடப்படும்.</small>
+                <small>*முழு மாதம் கணக்கில் எடுத்துக் கொள்ளப்படும்</small>
             </div>
         </div>
         <button onclick="fetchGlobalStats()">புள்ளிவிவரத்தை உருவாக்கு</button>
     </div>
 
-    <div id="loader">தரவுகள் சேகரிக்கப்படுகின்றன... தயவுசெய்து காத்திருக்கவும்...</div>
+    <div id="loader">தரவுகள் சேகரிக்கப்படுகின்றன...</div>
 
-    <table id="resultsTable">
+    <table>
         <thead>
             <tr>
-                <th style="width: 50px;">வ.எண்</th>
-                <th>பயனர் பெயர்</th>
-                <th>திட்டங்கள் வாரியாக (பங்களிப்பு எண்ணிக்கை)</th>
-                <th style="width: 100px;">மொத்தம்</th>
+                <th>வ.எண்</th>
+                <th>பயனர்</th>
+                <th>திட்டங்கள்</th>
+                <th>மொத்தம்</th>
             </tr>
         </thead>
         <tbody id="tableBody"></tbody>
@@ -65,83 +65,80 @@
 </div>
 
 <script>
-    // பயனர் பெயரில் உள்ள குப்பைகளை நீக்கும் நுட்பம்
-    function getCleanUsername(text) {
-        if (!text) return "";
-        let clean = text.replace(/--/g, "").trim();
-        // விக்கிப்பீடியா கையொப்பத்தில் உள்ள நேரம் மற்றும் பேச்சுப் பக்க இணைப்புகளை நீக்குகிறது
-        clean = clean.split('(')[0].split('0')[0].split('1')[0].split('2')[0].trim();
-        return clean;
-    }
+function cleanUsername(text) {
+    return text
+        .replace(/--/g, "")
+        .replace(/\(.*?\)/g, "")
+        .replace(/\d{2}:\d{2}.*$/, "")
+        .trim();
+}
 
-    async function fetchGlobalStats() {
-        const rawInput = document.getElementById('userList').value;
-        const lines = rawInput.split('\n').filter(l => l.trim() !== "");
-        const startVal = document.getElementById('startMonth').value;
-        const endVal = document.getElementById('endMonth').value;
-        
-        const dateFrom = `${startVal}-01`;
-        const dateTo = `${endVal}-31`; // API 31-ஆம் தேதி வரை தானாகவே ஏற்கும்
+function monthRange(month) {
+    const start = new Date(month + "-01");
+    const end = new Date(start);
+    end.setMonth(end.getMonth() + 1);
+    end.setDate(0);
+    return {
+        from: start.toISOString().split("T")[0],
+        to: end.toISOString().split("T")[0]
+    };
+}
 
-        const loader = document.getElementById('loader');
-        const tableBody = document.getElementById('tableBody');
-        const summary = document.getElementById('summary');
+async function fetchGlobalStats() {
+    const users = document.getElementById("userList").value
+        .split("\n")
+        .map(cleanUsername)
+        .filter(Boolean);
 
-        loader.style.display = "block";
-        tableBody.innerHTML = "";
-        summary.style.display = "none";
+    const start = monthRange(document.getElementById("startMonth").value);
+    const end = monthRange(document.getElementById("endMonth").value);
 
-        let grandTotal = 0;
+    document.getElementById("loader").style.display = "block";
+    document.getElementById("tableBody").innerHTML = "";
+    document.getElementById("summary").style.display = "none";
 
-        for (let i = 0; i < lines.length; i++) {
-            const user = getCleanUsername(lines[i]);
-            if (!user) continue;
+    let grandTotal = 0;
 
-            let userTotal = 0;
-            let projectDisplay = "";
+    for (let i = 0; i < users.length; i++) {
+        const user = users[i];
+        let userTotal = 0;
+        let projectHTML = "";
 
-            try {
-                // XTools Global API - பயனர் எந்தெந்த திட்டங்களில் கணக்கு வைத்துள்ளார் எனத் தேடுகிறது
-                const globalUrl = `https://xtools.wmcloud.org/api/user/pages_count/global/${encodeURIComponent(user)}`;
-                const gRes = await fetch(globalUrl);
-                const gData = await gRes.json();
+        try {
+            const gRes = await fetch(`https://xtools.wmcloud.org/api/user/pages_count/global/${encodeURIComponent(user)}`);
+            const gData = await gRes.json();
 
-                if (gData.projects) {
-                    const projectList = Object.keys(gData.projects);
-                    
-                    // ஒவ்வொரு திட்டத்திலும் குறிப்பிட்ட தேதியில் எத்தனை பங்களிப்புகள் எனத் தேடுகிறது
-                    for (let proj of projectList) {
-                        const statsUrl = `https://xtools.wmcloud.org/api/project/user_stats/${proj}/${encodeURIComponent(user)}/${dateFrom}/${dateTo}`;
-                        const sRes = await fetch(statsUrl);
-                        const sData = await sRes.json();
+            const projects = Object.keys(gData.projects || {});
 
-                        const count = sData.total_res || 0;
-                        if (count > 0) {
-                            userTotal += count;
-                            projectDisplay += `<span class="project-tag">${proj}: ${count}</span>`;
-                        }
-                    }
-                }
+            const stats = await Promise.all(
+                projects.map(p =>
+                    fetch(`https://xtools.wmcloud.org/api/project/user_stats/${p}/${encodeURIComponent(user)}/${start.from}/${end.to}`)
+                        .then(r => r.json())
+                        .then(d => ({ project: p, count: d.total_edits || 0 }))
+                        .catch(() => null)
+                )
+            );
 
-                grandTotal += userTotal;
-                tableBody.innerHTML += `
-                    <tr>
-                        <td>${i + 1}</td>
-                        <td><b>${user}</b></td>
-                        <td>${projectDisplay || '<span style="color:gray;">பங்களிப்புகள் இல்லை</span>'}</td>
-                        <td><b style="color:#2980b9">${userTotal}</b></td>
-                    </tr>`;
+            stats.filter(s => s && s.count > 0).forEach(s => {
+                userTotal += s.count;
+                projectHTML += `<span class="project-tag">${s.project}: ${s.count}</span>`;
+            });
 
-            } catch (err) {
-                console.error("Error fetching for: " + user, err);
-            }
+        } catch (e) {
+            console.error(e);
         }
 
-        loader.style.display = "none";
-        summary.style.display = "block";
-        summary.innerHTML = `அனைத்து பயனர்களின் ஒட்டுமொத்தப் பங்களிப்புகள்: ${grandTotal}`;
-    }
-</script>
+        grandTotal += userTotal;
 
-</body>
-</html>
+        document.getElementById("tableBody").innerHTML += `
+            <tr>
+                <td>${i + 1}</td>
+                <td><b>${user}</b></td>
+                <td>${projectHTML || "<span style='color:gray'>பங்களிப்புகள் இல்லை</span>"}</td>
+                <td><b>${userTotal}</b></td>
+            </tr>
+        `;
+    }
+
+    document.getElementById("loader").style.display = "none";
+    d
