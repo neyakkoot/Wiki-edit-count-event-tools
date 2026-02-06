@@ -8,8 +8,8 @@
         .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         h2 { color: #2c3e50; text-align: center; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
         .input-group { background: #f9f9f9; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        textarea { width: 100%; height: 150px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
-        .date-pickers { display: flex; gap: 20px; margin: 15px 0; align-items: center; }
+        textarea { width: 100%; height: 150px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; box-sizing: border-box; }
+        .date-pickers { display: flex; gap: 20px; margin: 15px 0; align-items: center; flex-wrap: wrap; }
         input[type="month"] { padding: 8px; border-radius: 5px; border: 1px solid #ddd; }
         button { background: #27ae60; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 16px; width: 100%; }
         button:hover { background: #219150; }
@@ -29,7 +29,7 @@
 
     <div class="input-group">
         <label><b>பயனர் பெயர்கள்:</b></label>
-        <textarea id="userList" placeholder="Subisena"></textarea>
+        <textarea id="userList" placeholder="ஒவ்வொரு வரியிலும் ஒரு பயனர் பெயர் அல்லது கையொப்பம்"></textarea>
 
         <div class="date-pickers">
             <div>
@@ -41,20 +41,20 @@
                 <input type="month" id="endMonth" value="2026-01">
             </div>
             <div style="flex-grow: 1; text-align: right;">
-                <small>*முழு மாதம் கணக்கில் எடுத்துக் கொள்ளப்படும்</small>
+                <small>*தேர்ந்தெடுக்கப்பட்ட மாதங்கள் முழுமையாகக் கணக்கிடப்படும்</small>
             </div>
         </div>
-        <button onclick="fetchGlobalStats()">புள்ளிவிவரத்தை உருவாக்கு</button>
+        <button onclick="fetchCentralStats()">புள்ளிவிவரத்தை உருவாக்கு</button>
     </div>
 
-    <div id="loader">தரவுகள் சேகரிக்கப்படுகின்றன...</div>
+    <div id="loader">தரவுகள் சேகரிக்கப்படுகின்றன... இது சிறிது நேரம் எடுக்கலாம்.</div>
 
-    <table>
+    <table id="resultTable">
         <thead>
             <tr>
                 <th>வ.எண்</th>
                 <th>பயனர்</th>
-                <th>திட்டங்கள்</th>
+                <th>திட்டங்கள் (பங்களிப்புகள்)</th>
                 <th>மொத்தம்</th>
             </tr>
         </thead>
@@ -65,37 +65,38 @@
 </div>
 
 <script>
+// பயனர் பெயரைச் சுத்திகரிக்கும் செயல்பாடு
 function cleanUsername(text) {
-    return text
-        .replace(/--/g, "")
-        .replace(/\(.*?\)/g, "")
-        .replace(/\d{2}:\d{2}.*$/, "")
-        .trim();
+    if (!text) return "";
+    let name = text.replace(/--/g, "").trim();
+    // அடைப்புக்குறிகள் மற்றும் அதற்குப் பின் உள்ள நேரக் குறியீடுகளை நீக்குகிறது
+    name = name.split('(')[0].split(/[0-9]/)[0].trim(); 
+    return name;
 }
 
-function monthRange(month) {
-    const start = new Date(month + "-01");
-    const end = new Date(start);
-    end.setMonth(end.getMonth() + 1);
-    end.setDate(0);
+// தேதி வரம்பை API-க்கு ஏற்றவாறு மாற்றுதல்
+function getDateRange() {
+    const startVal = document.getElementById("startMonth").value;
+    const endVal = document.getElementById("endMonth").value;
+    
     return {
-        from: start.toISOString().split("T")[0],
-        to: end.toISOString().split("T")[0]
+        from: startVal + "-01T00:00:00Z",
+        to: endVal + "-28T23:59:59Z" // பிப்ரவரி கருதி 28, API இதைச் சரிசெய்து கொள்ளும்
     };
 }
 
-async function fetchGlobalStats() {
-    const users = document.getElementById("userList").value
-        .split("\n")
-        .map(cleanUsername)
-        .filter(Boolean);
+async function fetchCentralStats() {
+    const rawInput = document.getElementById("userList").value;
+    const users = rawInput.split("\n").map(cleanUsername).filter(Boolean);
+    const range = getDateRange();
 
-    const start = monthRange(document.getElementById("startMonth").value);
-    const end = monthRange(document.getElementById("endMonth").value);
+    const loader = document.getElementById("loader");
+    const tableBody = document.getElementById("tableBody");
+    const summary = document.getElementById("summary");
 
-    document.getElementById("loader").style.display = "block";
-    document.getElementById("tableBody").innerHTML = "";
-    document.getElementById("summary").style.display = "none";
+    loader.style.display = "block";
+    tableBody.innerHTML = "";
+    summary.style.display = "none";
 
     let grandTotal = 0;
 
@@ -105,45 +106,51 @@ async function fetchGlobalStats() {
         let projectHTML = "";
 
         try {
-            const gRes = await fetch(`https://xtools.wmcloud.org/api/user/pages_count/global/${encodeURIComponent(user)}`);
-            const gData = await gRes.json();
+            // CentralAuth மூலம் பயனர் இணைக்கப்பட்டுள்ள திட்டங்களைப் பெறுதல்
+            const centralUrl = `https://meta.wikimedia.org/w/api.php?action=query&meta=centralauth&ucuser=${encodeURIComponent(user)}&format=json&origin=*`;
+            const cRes = await fetch(centralUrl);
+            const cData = await cRes.json();
 
-            const projects = Object.keys(gData.projects || {});
+            if (cData.query && cData.query.centralauth && cData.query.centralauth.attached) {
+                const attachedProjects = cData.query.centralauth.attached;
 
-            const stats = await Promise.all(
-                projects.map(p =>
-                    fetch(`https://xtools.wmcloud.org/api/project/user_stats/${p}/${encodeURIComponent(user)}/${start.from}/${end.to}`)
-                        .then(r => r.json())
-                        .then(d => ({ project: p, count: d.total_edits || 0 }))
-                        .catch(() => null)
-                )
-            );
+                // ஒவ்வொரு திட்டத்திலும் குறிப்பிட்ட காலத்தில் செய்த தொகுப்புகளைக் கணக்கிடுதல்
+                for (let proj of attachedProjects) {
+                    const wikiUrl = proj.url.replace("http://", "https://") + "/w/api.php";
+                    const statsUrl = `${wikiUrl}?action=query&list=usercontribs&ucuser=${encodeURIComponent(user)}&ucstart=${range.to}&ucend=${range.from}&uclimit=500&format=json&origin=*`;
+                    
+                    const sRes = await fetch(statsUrl);
+                    const sData = await sRes.json();
 
-            stats.filter(s => s && s.count > 0).forEach(s => {
-                userTotal += s.count;
-                projectHTML += `<span class="project-tag">${s.project}: ${s.count}</span>`;
-            });
+                    if (sData.query && sData.query.usercontribs) {
+                        const count = sData.query.usercontribs.length;
+                        if (count > 0) {
+                            userTotal += count;
+                            // திட்டத்தின் பெயரைச் சுருக்குதல் (எ.கா: tawiki -> ta.wikipedia)
+                            let shortName = proj.wiki.replace("wiki", ".wiki");
+                            projectHTML += `<span class="project-tag">${shortName}: ${count}</span>`;
+                        }
+                    }
+                }
+            }
+
+            grandTotal += userTotal;
+            tableBody.innerHTML += `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td><b>${user}</b></td>
+                    <td>${projectHTML || "<span style='color:gray'>குறிப்பிட்ட காலத்தில் பங்களிப்புகள் இல்லை</span>"}</td>
+                    <td><b style="color:#2980b9">${userTotal}</b></td>
+                </tr>`;
 
         } catch (e) {
-            console.error(e);
+            console.error("Error for " + user, e);
         }
-
-        grandTotal += userTotal;
-
-        document.getElementById("tableBody").innerHTML += `
-            <tr>
-                <td>${i + 1}</td>
-                <td><b>${user}</b></td>
-                <td>${projectHTML || "<span style='color:gray'>பங்களிப்புகள் இல்லை</span>"}</td>
-                <td><b>${userTotal}</b></td>
-            </tr>
-        `;
     }
 
-    document.getElementById("loader").style.display = "none";
-    document.getElementById("summary").style.display = "block";
-    document.getElementById("summary").innerText =
-        `அனைத்து பயனர்களின் மொத்தப் பங்களிப்புகள்: ${grandTotal}`;
+    loader.style.display = "none";
+    summary.style.display = "block";
+    summary.innerText = `அனைத்து பயனர்களின் மொத்தப் பங்களிப்புகள்: ${grandTotal}`;
 }
 </script>
 
