@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>விக்கிமீடியா பங்களிப்பாளர் புள்ளிவிவரம்</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f9; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        h2 { color: #232f3e; text-align: center; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        
+        .input-section { background: #eef2f7; padding: 20px; border-radius: 10px; margin-bottom: 25px; }
+        .grid-layout { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px; }
+        
+        textarea { width: 100%; height: 120px; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; }
+        input[type="month"] { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; }
+        
+        button { width: 100%; margin-top: 15px; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        button:hover { background-color: #219150; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #3498db; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        .project-tag { display: inline-block; background: #d1ecf1; color: #0c5460; padding: 3px 8px; border-radius: 4px; font-size: 11px; margin: 2px; border: 1px solid #bee5eb; }
+        .loader { display: none; text-align: center; font-weight: bold; color: #e67e22; margin: 15px; }
+        .summary { margin-top: 20px; padding: 15px; background: #d4edda; color: #155724; border-radius: 8px; font-size: 1.2em; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>விக்கிமீடியா திட்டங்கள் - பங்களிப்பாளர் புள்ளிவிவரக் கருவி</h2>
+
+    <div class="input-section">
+        <div class="grid-layout">
+            <div>
+                <label><b>பயனர் பெயர்கள் (ஒவ்வொரு வரிசையிலும் ஒரு பெயர்):</b></label>
+                <textarea id="userList" placeholder="உதாரணம்:&#10;Subisena&#10;Mallika Vijayakumar"></textarea>
+            </div>
+            <div>
+                <label><b>தொடக்க மாதம்:</b></label>
+                <input type="month" id="startMonth" value="2026-01">
+            </div>
+            <div>
+                <label><b>முடிவு மாதம்:</b></label>
+                <input type="month" id="endMonth" value="2026-01">
+            </div>
+        </div>
+        <button onclick="runAnalytics()">புள்ளிவிவரத்தை உருவாக்கு</button>
+    </div>
+
+    <div id="loader" class="loader">தரவுகள் சேகரிக்கப்படுகின்றன... இது சில நிமிடங்கள் எடுக்கலாம்...</div>
+
+    <table id="results">
+        <thead>
+            <tr>
+                <th>வ.எண்</th>
+                <th>பயனர் பெயர்</th>
+                <th>விக்கித் திட்டங்கள் வாரியாக (எண்ணிக்கை)</th>
+                <th>மொத்தம்</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <div id="totalSummary" class="summary" style="display:none;"></div>
+</div>
+
+<script>
+    async function runAnalytics() {
+        const userText = document.getElementById('userList').value;
+        const users = userText.split('\n').map(u => u.trim()).filter(u => u !== "");
+        const startMonth = document.getElementById('startMonth').value;
+        const endMonth = document.getElementById('endMonth').value;
+        
+        if (users.length === 0) { alert("குறைந்தது ஒரு பயனர் பெயராவது உள்ளிடவும்!"); return; }
+
+        const loader = document.getElementById('loader');
+        const tableBody = document.getElementById('tableBody');
+        const summary = document.getElementById('totalSummary');
+
+        loader.style.display = "block";
+        tableBody.innerHTML = "";
+        summary.style.display = "none";
+
+        let grandTotalEdits = 0;
+
+        // கால அளவை API-க்கு ஏற்றவாறு மாற்றுதல் (YYYY-MM-01 to YYYY-MM-31)
+        const dateFrom = `${startMonth}-01`;
+        const dateTo = `${endMonth}-31`;
+
+        for (let i = 0; i < users.length; i++) {
+            const user = users[i];
+            let userGrandTotal = 0;
+            let projectBreakdown = "";
+
+            try {
+                // XTools Global API-ஐப் பயன்படுத்தி பயனரின் அனைத்து திட்டங்களையும் கண்டறிதல்
+                const globalUrl = `https://xtools.wmcloud.org/api/user/pages_count/global/${encodeURIComponent(user)}`;
+                const globalRes = await fetch(globalUrl);
+                const globalData = await globalRes.json();
+
+                if (globalData.projects) {
+                    // ஒவ்வொரு திட்டத்திலும் குறிப்பிட்ட காலத்தில் செய்த பங்களிப்புகளைப் பெறுதல்
+                    const projectKeys = Object.keys(globalData.projects);
+                    
+                    for (const project of projectKeys) {
+                        const statsUrl = `https://xtools.wmcloud.org/api/project/user_stats/${project}/${encodeURIComponent(user)}/${dateFrom}/${dateTo}`;
+                        const statsRes = await fetch(statsUrl);
+                        const statsData = await statsRes.json();
+                        
+                        const count = statsData.total_res || 0;
+                        if (count > 0) {
+                            userGrandTotal += count;
+                            projectBreakdown += `<span class="project-tag">${project}: <b>${count}</b></span>`;
+                        }
+                    }
+                }
+
+                grandTotalEdits += userGrandTotal;
+
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td><b>${user}</b></td>
+                        <td>${projectBreakdown || '<i style="color:gray">இக்காலத்தில் பங்களிப்புகள் இல்லை</i>'}</td>
+                        <td><b style="color:#2980b9">${userGrandTotal}</b></td>
+                    </tr>`;
+
+            } catch (err) {
+                console.error("Error for user: " + user, err);
+            }
+        }
+
+        loader.style.display = "none";
+        summary.style.display = "block";
+        summary.innerHTML = `அனைத்து பங்களிப்பாளர்களின் ஒட்டுமொத்தப் பங்களிப்புகள்: ${grandTotalEdits}`;
+    }
+</script>
+
+</body>
+</html>
